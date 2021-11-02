@@ -1,4 +1,5 @@
 using Lean.Touch;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -8,7 +9,7 @@ namespace DrawSpell
 {
     [RequireComponent(typeof(CharacterController))]
     public class Enemy : MonoBehaviour, IDamageable
-    {      
+    {
         private DrawSpellGeneralConfig config => DrawSpellGeneralConfig.instance;
 
         [SerializeField] private float runspeed => config.speedEnemy;
@@ -30,9 +31,10 @@ namespace DrawSpell
         public float MoveSpeedScale { set => moveSpeedScale = value; }
 
         public event IDamageable.OnDamage OnDamageTaken;
+        public event Action EnemyKilled;
 
         private void Start()
-        {
+        {           
             enemyController = GetComponent<CharacterController>();
             GenerateShapes();
         }
@@ -62,13 +64,13 @@ namespace DrawSpell
             {
                 if (shape.Type == prefabShape.Type)
                 {
+                    OnDamageTaken?.Invoke(this);
                     shapesAsHp.Remove(shape);
                     Destroy(shape.gameObject);
-                    OnDamageTaken?.Invoke(this);
 
                     if (spellsToKill.Count <= 0)
                     {
-                        player.Enemies.Remove(this);
+                        player.UpdateKillCount();
                         Destroy(gameObject);
                     }
                     break;
@@ -83,11 +85,16 @@ namespace DrawSpell
 
             foreach (var spell in spellsToKill)
             {
-                shapesAsHp.Add(Instantiate(spell.SpellSymbols[0], new Vector3(transform.position.x + shapeOffset, transform.position.y + additionalShapeHeight, transform.position.z), Quaternion.Euler(0f, 180f, 0f), gameObject.transform).GetComponent<ShapeTypeController>());
+                shapesAsHp.Add(Instantiate(spell.SpellSymbols[0], new Vector3(transform.position.x + shapeOffset, spell.SpellSymbols[0].transform.position.y + additionalShapeHeight, transform.position.z),
+                    Quaternion.Euler(0f, 180f, 0f), gameObject.transform).GetComponent<ShapeTypeController>());
                 shapeOffset = -shapeOffset;
-                shapesAsHp[index].transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
                 index++;
             }
+        }
+
+        private void OnDestroy()
+        {
+            player.Enemies.Remove(this);
         }
     }
 }

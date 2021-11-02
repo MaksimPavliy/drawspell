@@ -1,4 +1,5 @@
 using Lean.Touch;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,7 @@ namespace DrawSpell
         [SerializeField] private float runspeed;
         [SerializeField] private Transform spellEffects;
         [SerializeField] private Transform playerWand;
+
         private DrawSpellGeneralConfig config => DrawSpellGeneralConfig.instance;
         private List<Enemy> enemies = new List<Enemy>();
         private CharacterController characterController;
@@ -18,10 +20,11 @@ namespace DrawSpell
         private float moveForward = 1;
         private int hp = 5;
         private bool shieldIsActive;
+        private int killCount;
 
         public bool ShieldIsActive { set => shieldIsActive = value; }
-
         public List<Enemy> Enemies { get => enemies; set => enemies = value; }
+
 
         void Start()
         {
@@ -33,16 +36,6 @@ namespace DrawSpell
         public void OnPlay()
         {
             runspeed = config.speedPlayer;
-        }
-
-        public void DoWin()
-        {
-
-        }
-
-        public void DoLoss()
-        {
-            Destroy(this.gameObject);
         }
 
         void Update()
@@ -84,6 +77,16 @@ namespace DrawSpell
                 {
                     GameManager.instance.DoLose();
                 }
+            }
+        }
+
+        public void UpdateKillCount()
+        {
+            killCount++;
+
+            if(killCount >= 5)
+            {
+                GameManager.instance.DoWin();
             }
         }
     }

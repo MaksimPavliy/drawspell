@@ -16,19 +16,22 @@ namespace DrawSpell
         private float minOffset = 1.2f;
         private float maxOffset = 3.8f;
 
-        void Start()
+        public void OnPlay()
         {
             StartCoroutine(SpawnEnemy());
         }
 
         private IEnumerator SpawnEnemy()
         {
-            randomEnemy = Random.Range(0, enemies.Length);
-            enemy = Instantiate(enemies[randomEnemy], new Vector3(Random.Range(minOffset, maxOffset), enemies[randomEnemy].transform.position.y, player.transform.position.z + spawnDistance), Quaternion.identity, gameObject.transform);
-            enemy.Player = player;
-            player.Enemies.Add(enemy);
-            yield return new WaitForSeconds(spawnDelay);
-            StartCoroutine(SpawnEnemy());
+            if (GameManager.instance.IsPlaying)
+            {
+                randomEnemy = Random.Range(0, enemies.Length);
+                enemy = Instantiate(enemies[randomEnemy], new Vector3(Random.Range(minOffset, maxOffset), enemies[randomEnemy].transform.position.y, player.transform.position.z + spawnDistance), Quaternion.identity, gameObject.transform);
+                enemy.Player = player;
+                player.Enemies.Add(enemy);
+                yield return new WaitForSeconds(spawnDelay);
+                StartCoroutine(SpawnEnemy());
+            }
         }
     }
 }

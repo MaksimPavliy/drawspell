@@ -51,13 +51,10 @@ namespace DrawSpell
         {
             if (abilityCooldown <= 0)
             {
-                float playerScale = 100f;
-
                 switch ((AbilityType)value)
                 {
                     case AbilityType.shield:
                         abilityInstance = Instantiate(shield, transform.position, Quaternion.identity, player.gameObject.transform);
-                        abilityInstance.transform.localScale *= playerScale;
                         abilityType = AbilityType.shield;
                         AbilityEffects.Add(abilityInstance);
                         player.ShieldIsActive = true;

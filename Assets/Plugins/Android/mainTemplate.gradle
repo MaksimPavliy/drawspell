@@ -19,7 +19,7 @@ allprojects {
     }
 }
 
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 **APPLY_PLUGINS**
 
 dependencies {
@@ -36,9 +36,10 @@ android {
     }
 
     defaultConfig {
+consumerProguardFiles 'proguard-unity.txt'**USER_PROGUARD**
         minSdkVersion **MINSDKVERSION**
         targetSdkVersion **TARGETSDKVERSION**
-        applicationId '**APPLICATIONID**'
+        
         ndk {
             abiFilters **ABIFILTERS**
         }
@@ -54,18 +55,8 @@ android {
     aaptOptions {
         noCompress = ['.ress', '.resource', '.obb'] + unityStreamingAssets.tokenize(', ')
         ignoreAssetsPattern = "!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~"
-    }**PACKAGING_OPTIONS****SPLITS**
+    }**PACKAGING_OPTIONS**
 **BUILT_APK_LOCATION**
 **EXTERNAL_SOURCES**
-    bundle {
-        language {
-            enableSplit = false
-        }
-        density {
-            enableSplit = false
-        }
-        abi {
-            enableSplit = true
-        }
-    }
-}**SPLITS_VERSION_CODE****REPOSITORIES****SOURCE_BUILD_SETUP**
+    
+}**REPOSITORIES****SOURCE_BUILD_SETUP**
