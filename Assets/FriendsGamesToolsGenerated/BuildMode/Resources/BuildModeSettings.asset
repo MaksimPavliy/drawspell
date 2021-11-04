@@ -25,6 +25,9 @@ MonoBehaviour:
     build
     mode should be release
 
+    FriendsGamesIncubator requires unity version 2021.1.11f1
+    or 2019.3.13f1
+
 '
   configs:
   - howToApply: 2

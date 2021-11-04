@@ -5,17 +5,17 @@ using UnityEngine;
 
 public abstract class Spell : MonoBehaviour
 {
-    [SerializeField] private List<LeanShape> spellSymbols;
+    [SerializeField] private Shape shape;
+    [SerializeField] private bool dealedDamage = false;
 
-    private bool isCasted;
-    private IDamageable target;
     private ParticleSystem particles;
-    private bool dealedDamage;
+    private IDamageable target;
+    private bool isCasted;
 
-    public List<LeanShape> SpellSymbols => spellSymbols;
+    public Shape Shape => shape;
     public ParticleSystem Particles => particles;
-    public bool DealedDamage => dealedDamage;
 
+    public bool DealedDamage { get => dealedDamage; set => dealedDamage = value; }
     public IDamageable Target { get => target; set => target = value; }
     public bool IsCasted { get => isCasted; set => isCasted = value; }
 
@@ -26,7 +26,7 @@ public abstract class Spell : MonoBehaviour
             particles = GetComponent<ParticleSystem>();
         }
 
-        target.OnDamageTaken += SetSpellState;
+        target.OnPlayerAttacked += SetSpellState;
     }
 
     private void SetSpellState(IDamageable enemy)

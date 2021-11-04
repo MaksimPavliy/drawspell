@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AreaSpell : Spell
@@ -9,19 +7,19 @@ public class AreaSpell : Spell
 
     void Update()
     {
-        if (DealedDamage && !Particles.IsAlive())
-        { 
-            Destroy(gameObject);
-        }
-
         if (!DealedDamage)
         {
             transform.position = new Vector3(Target.gameObject.transform.position.x, Target.gameObject.transform.position.y - offset, Target.gameObject.transform.position.z);
 
             if (Particles.time >= EmitionTimeBeforeDamage)
             {
-                Target.TakeDamage(this);
+                Target.TakeDamage(Shape);
+                DealedDamage = true;
             }
+        }
+        else if (!Particles.IsAlive())
+        {
+            gameObject.SetActive(false);
         }
     }
 }

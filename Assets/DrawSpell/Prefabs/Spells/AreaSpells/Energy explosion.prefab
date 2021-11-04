@@ -29245,8 +29245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff00c32526a133043be125640318fac2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spellSymbols:
-  - {fileID: 531043114360883510, guid: 7991424eb5324d74190d4dc117b1c5d1, type: 3}
+  shape: {fileID: -4451696459104710018, guid: 7991424eb5324d74190d4dc117b1c5d1, type: 3}
   EmitionTimeBeforeDamage: 0.9
   offset: -1
 --- !u!1 &1598199573090778

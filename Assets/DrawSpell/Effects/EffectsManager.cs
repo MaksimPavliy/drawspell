@@ -1,53 +1,61 @@
 using FriendsGamesTools;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-[Serializable]
-public class EffectsList
+namespace DrawSpell
 {
-    private List<ParticleSystem> list;
-
-    [SerializeField]
-    private ParticleSystem prefab;
-    [SerializeField]
-    private Transform parent;
-    
-    public void Clear()
+    [Serializable]
+    public class EffectsList
     {
-        if (list == null) list = new List<ParticleSystem>();
+        private List<Spell> list;
 
-        foreach (var effect in list)
+        [SerializeField]
+        private Spell spellPrefab;
+        [SerializeField]
+        private Transform parent;
+
+        public Spell SpellPrefab => spellPrefab;
+
+        public void Clear()
         {
-            GameObject.Destroy(effect.gameObject);
-        }
-        list.Clear();
-    }
-    public ParticleSystem PlayEffect(Vector3 position)
-    {
-        if (list == null) list = new List<ParticleSystem>();
+            if (list == null) list = new List<Spell>();
 
-        var effect = list.Find(x => x!=null && !x.gameObject.activeSelf);
-        if (!effect)
+            foreach (var spellEffect in list)
+            {
+                GameObject.Destroy(spellEffect.gameObject);
+            }
+            list.Clear();
+        }
+        public Spell PlayEffect(Vector3 position, Enemy enemy)
         {
-            effect= GameObject.Instantiate(prefab, parent) ;
-            list.Add(effect);
-        }
-        effect.transform.position = position;
-        effect.gameObject.SetActive(true);
-     
-        return effect;
-    }
-    
-}
-public class EffectsManager : MonoBehaviourHasInstance<EffectsManager>
-{
-    [SerializeField] private EffectsList defaultEffect;
+            if (list == null) list = new List<Spell>();
 
-    private ParticleSystem PlayEffect(EffectsList effect, Vector3 position)
+            var spellEffect = list.Find(x => x != null && !x.gameObject.activeSelf);
+            if (!spellEffect)
+            {
+                spellEffect = GameObject.Instantiate(spellPrefab, parent);
+                list.Add(spellEffect);
+            }
+            spellEffect.transform.position = position;
+            spellEffect.DealedDamage = false;
+            spellEffect.Target = enemy;
+            spellEffect.IsCasted = true;
+            spellEffect.gameObject.SetActive(true);
+
+            return spellEffect;
+        }
+
+    }
+
+    public class EffectsManager : MonoBehaviourHasInstance<EffectsManager>
     {
-        return effect.PlayEffect(position);
+        [SerializeField]
+        private List<EffectsList> spellPrefabs;
+
+        public EffectsList FindSpellEffect(Spell spell)
+        {
+            return spellPrefabs.Find(x => x.SpellPrefab == spell);
+        }
     }
 }

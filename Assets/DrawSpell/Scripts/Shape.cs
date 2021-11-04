@@ -1,11 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ShapeTypeController : MonoBehaviour
+public class Shape : MonoBehaviour
 {
     [SerializeField] private ShapeType type;
 
+    private bool isEnabled = true;
+
+    public bool IsEnabled => isEnabled;
     public ShapeType Type => type;
 
     public enum ShapeType : byte
@@ -15,5 +16,10 @@ public class ShapeTypeController : MonoBehaviour
         ShapeType3,
         ShapeType4,
         ShapeType5
+    }
+
+    public void EnableShape(bool value)
+    {
+        isEnabled = value;
     }
 }

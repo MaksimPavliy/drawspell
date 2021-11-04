@@ -1,8 +1,6 @@
 using FriendsGamesTools;
 using FriendsGamesTools.ECSGame;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace DrawSpell
 {
@@ -16,33 +14,33 @@ namespace DrawSpell
 
         public bool IsPlaying { get => isPlaying; set => isPlaying = value; }
 
-        private void Start()
-        {
-            lean.SetActive(false);
-        }
-
         public void OnPlay()
         {
+            lean.SetActive(true);
             IsPlaying = true;
             player.OnPlay();
             spawner.OnPlay();
-            lean.SetActive(true);
         }
 
         public void DoWin()
         {
-            FindObjectsOfType<LineRenderer>().ForEach(lineRenderer => Destroy(lineRenderer.gameObject));
+            RemoveLineRenderers();
+            lean.SetActive(false);
             GameRoot.instance.Get<WinnableLocationsController>().DoWin();
             IsPlaying = false;
-            lean.SetActive(false);
         }
 
         public void DoLose()
         {
-            FindObjectsOfType<LineRenderer>().ForEach(lineRenderer => Destroy(lineRenderer.gameObject));
+            RemoveLineRenderers();
+            lean.SetActive(false);
             GameRoot.instance.Get<WinnableLocationsController>().DoLose();
             IsPlaying = false;
-            lean.SetActive(false);
+        }
+
+        private void RemoveLineRenderers()
+        {
+            FindObjectsOfType<LineRenderer>().ForEach(lineRenderer => Destroy(lineRenderer.gameObject));
         }
     }
 }

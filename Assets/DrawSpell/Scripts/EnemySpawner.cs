@@ -9,7 +9,7 @@ namespace DrawSpell
         [SerializeField] private Enemy[] enemies;
         [SerializeField] private Player player;
 
-        private Enemy enemy;
+        private List<Enemy> list;
         private int randomEnemy;
         private int spawnDistance = 70;
         private float spawnDelay => DrawSpellGeneralConfig.instance.spawnDelay;
@@ -26,12 +26,35 @@ namespace DrawSpell
             if (GameManager.instance.IsPlaying)
             {
                 randomEnemy = Random.Range(0, enemies.Length);
-                enemy = Instantiate(enemies[randomEnemy], new Vector3(Random.Range(minOffset, maxOffset), enemies[randomEnemy].transform.position.y, player.transform.position.z + spawnDistance), Quaternion.identity, gameObject.transform);
-                enemy.Player = player;
-                player.Enemies.Add(enemy);
+                SpawnEnemyFromPool(new Vector3(Random.Range(minOffset, maxOffset),
+                enemies[randomEnemy].transform.position.y, player.transform.position.z + spawnDistance));
                 yield return new WaitForSeconds(spawnDelay);
                 StartCoroutine(SpawnEnemy());
             }
+        }
+
+        public Enemy SpawnEnemyFromPool(Vector3 position)
+        {
+            if (list == null) list = new List<Enemy>();
+
+            var pooledEnemy = list.Find(x => x != null && !x.gameObject.activeSelf && x.EnemyType == enemies[randomEnemy].EnemyType);
+            if (!pooledEnemy)
+            {
+                pooledEnemy = Instantiate(enemies[randomEnemy], position, Quaternion.identity, gameObject.transform);
+                pooledEnemy.Player = player;
+                pooledEnemy.GenerateShapes();
+                list.Add(pooledEnemy);
+            }
+            pooledEnemy.transform.position = position;
+            foreach (var shape in pooledEnemy.Shapes)
+            {
+                shape.EnableShape(true);
+                shape.gameObject.SetActive(true);
+            }
+            pooledEnemy.gameObject.SetActive(true);
+            player.Enemies.Add(pooledEnemy);
+
+            return pooledEnemy;
         }
     }
 }

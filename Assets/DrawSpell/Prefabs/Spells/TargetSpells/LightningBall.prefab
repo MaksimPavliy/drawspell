@@ -4690,7 +4690,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7efdd596f4151f44ebf0b08e94a2fcbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spellSymbols:
-  - {fileID: 1294011509813606828, guid: 58f4cb8891281b54aaede8d56a5bad3e, type: 3}
+  shape: {fileID: 3530814023973063086, guid: 58f4cb8891281b54aaede8d56a5bad3e, type: 3}
   flyingSpeed: 0.3
   offsetByY: 1

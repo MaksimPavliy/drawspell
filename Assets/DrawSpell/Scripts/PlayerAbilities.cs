@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -86,14 +85,6 @@ namespace DrawSpell
             if (abilityType == AbilityType.shield)
             {
                 player.ShieldIsActive = false;
-            }
-
-            else if (abilityType == AbilityType.slow)
-            {
-                foreach (var enemy in player.Enemies)
-                {
-                    enemy.MoveSpeedScale = 1f;
-                }
             }
         }
     }

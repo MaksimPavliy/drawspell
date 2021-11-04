@@ -716,6 +716,36 @@ Transform:
   m_Father: {fileID: 6011443858462050991}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5674446417574814866
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 32288667616039448}
+  m_Layer: 0
+  m_Name: HpShapes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &32288667616039448
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5674446417574814866}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6011443858462050991}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &5736650173584482008
 GameObject:
   m_ObjectHideFlags: 0
@@ -921,15 +951,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6352082058623701013}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 2.6, y: 5, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3341170326298430898}
   - {fileID: 6844115878080186849}
+  - {fileID: 32288667616039448}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &1435529579394303572
 CharacterController:
   m_ObjectHideFlags: 0
@@ -960,12 +991,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d5a7ff6594e53b44b84bfe6797fd801, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HpShapes: {fileID: 32288667616039448}
   damageToPlayer: 1
   spellsToKill:
   - {fileID: 2739716804871515749, guid: 0f30935d6072ea440b8bbcbba21775a8, type: 3}
   - {fileID: -2582446535020609318, guid: a91a44d8fe830874cb776823c2ba3e9f, type: 3}
   additionalShapeHeight: 1
   shapeOffset: 0.6
+  enemyType: 2
 --- !u!95 &-4212265235247248474
 Animator:
   serializedVersion: 3

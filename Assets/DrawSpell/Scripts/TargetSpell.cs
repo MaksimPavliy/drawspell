@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TargetSpell : Spell
@@ -11,16 +9,12 @@ public class TargetSpell : Spell
 
     void Update()
     {
-        if (DealedDamage)
-        {
-            Destroy(gameObject);
-        }
-
         if (IsCasted && !DealedDamage)
         {
-            if (Target != null && Vector3.Distance(transform.position, Target.gameObject.transform.position) < 2f)
+            if (Vector3.Distance(transform.position, Target.gameObject.transform.position) < 2f)
             {
-                Target.TakeDamage(this);
+                Target.TakeDamage(Shape);
+                DealedDamage = true;
             }
             else
             {
@@ -28,5 +22,8 @@ public class TargetSpell : Spell
                 transform.position = Vector3.MoveTowards(transform.position, new Vector3(targetPosition.x, targetPosition.y + offsetByY, targetPosition.z), flyingSpeed);
             }
         }
+        else
+            gameObject.SetActive(false);
     }
 }
+

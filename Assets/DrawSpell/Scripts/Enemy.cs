@@ -1,8 +1,4 @@
-using Lean.Touch;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 namespace DrawSpell
@@ -13,30 +9,31 @@ namespace DrawSpell
         private DrawSpellGeneralConfig config => DrawSpellGeneralConfig.instance;
 
         [SerializeField] private float runspeed => config.speedEnemy;
+        [SerializeField] private Transform HpShapes;
         [SerializeField] private int damageToPlayer = 1;
         [SerializeField] private List<Spell> spellsToKill;
         [SerializeField] private float additionalShapeHeight;
         [SerializeField] private float shapeOffset = 0.6f;
+        [SerializeField] private EnemyType enemyType;
+
         private CharacterController enemyController;
-        private ShapeTypeController prefabShape;
-        private List<ShapeTypeController> shapesAsHp = new List<ShapeTypeController>();
+        private List<Shape> shapes = new List<Shape>();
         private Player player;
         private float moveForward = 1;
         private float attackAnimationDistance = 5f;
-        private float moveSpeedScale = 1;
+        private int activeShapesCount;
 
+        public EnemyType EnemyType => enemyType;
         public Player Player { set => player = value; }
         public List<Spell> SpellsToKill => spellsToKill;
-        public List<ShapeTypeController> ShapesAsHp => shapesAsHp;
-        public float MoveSpeedScale { set => moveSpeedScale = value; }
+        public List<Shape> Shapes => shapes;
 
-        public event IDamageable.OnDamage OnDamageTaken;
-        public event Action EnemyKilled;
+        public event IDamageable.OnDamage OnPlayerAttacked;
 
         private void Start()
-        {           
+        {
             enemyController = GetComponent<CharacterController>();
-            GenerateShapes();
+            activeShapesCount = shapes.Count;
         }
 
         void Update()
@@ -45,56 +42,54 @@ namespace DrawSpell
             {
                 transform.forward = new Vector3(0, 0, -moveForward);
 
-                enemyController.Move(new Vector3(0, 0, -moveForward * runspeed) * Time.deltaTime * moveSpeedScale);
+                enemyController.Move(new Vector3(0, 0, -moveForward * runspeed) * Time.deltaTime);
 
                 if (Vector3.Distance(player.transform.position, transform.position) < attackAnimationDistance)
                 {
-                    OnDamageTaken?.Invoke(this);
+                    OnPlayerAttacked?.Invoke(this);
                     player.TakeDamage(damageToPlayer);
-                    Destroy(gameObject);
+                    gameObject.SetActive(false);
                 }
             }
         }
 
-        public void TakeDamage(Spell spell)
+        public void TakeDamage(Shape shape)
         {
-            prefabShape = spell.SpellSymbols[0].GetComponent<ShapeTypeController>();
+            shapes.Find(shapeClone => shapeClone.Type == shape.Type).gameObject.SetActive(false);
+            activeShapesCount--;
 
-            foreach (var shape in shapesAsHp)
+            if (activeShapesCount <= 0)
             {
-                if (shape.Type == prefabShape.Type)
-                {
-                    OnDamageTaken?.Invoke(this);
-                    shapesAsHp.Remove(shape);
-                    Destroy(shape.gameObject);
-
-                    if (spellsToKill.Count <= 0)
-                    {
-                        player.UpdateKillCount();
-                        Destroy(gameObject);
-                    }
-                    break;
-                }
+                gameObject.SetActive(false);
             }
         }
 
-        private void GenerateShapes()
+        public void GenerateShapes()
         {
             shapeOffset = spellsToKill.Count == 1 ? 0 : shapeOffset;
-            int index = 0;
 
             foreach (var spell in spellsToKill)
             {
-                shapesAsHp.Add(Instantiate(spell.SpellSymbols[0], new Vector3(transform.position.x + shapeOffset, spell.SpellSymbols[0].transform.position.y + additionalShapeHeight, transform.position.z),
-                    Quaternion.Euler(0f, 180f, 0f), gameObject.transform).GetComponent<ShapeTypeController>());
+                shapes.Add(Instantiate(spell.Shape, new Vector3(transform.position.x + shapeOffset, spell.Shape.transform.position.y + additionalShapeHeight, transform.position.z),
+                    Quaternion.Euler(0, 180, 0), HpShapes).GetComponent<Shape>());
                 shapeOffset = -shapeOffset;
-                index++;
             }
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
+            player.UpdateKillCount();
             player.Enemies.Remove(this);
+            activeShapesCount = shapes.Count;
         }
+    }
+
+    public enum EnemyType
+    {
+        Pumpkin,
+        Spirit,
+        Spider,
+        Skeleton,
+        Bat
     }
 }

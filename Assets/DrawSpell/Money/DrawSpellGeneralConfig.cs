@@ -8,5 +8,6 @@ namespace DrawSpell
         public float speedPlayer = 4;
         public float speedEnemy = 4;
         public float spawnDelay = 1f;
+        public int levelCompletionKillCount = 15;
     }
 }
