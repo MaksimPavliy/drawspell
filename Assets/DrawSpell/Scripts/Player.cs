@@ -55,14 +55,17 @@ namespace DrawSpell
                     {
                         shape.EnableShape(false);
                         Spell spell = enemy.SpellsToKill.Find(spell => shape.Type == spell.Shape.Type);
+                        spell.gameObject.SetActive(false);
+
                         if (spell.GetComponent<TargetSpell>() == null)
                         {
-                            EffectsManager.instance.FindSpellEffect(spell).PlayEffect(enemy.transform.position, enemy);
+                            spell = EffectsManager.instance.FindSpellEffect(spell).PlayEffect(enemy.transform.position, enemy);
                         }
                         else
                         {
-                            EffectsManager.instance.FindSpellEffect(spell).PlayEffect(playerWand.position, enemy);
+                            spell = EffectsManager.instance.FindSpellEffect(spell).PlayEffect(playerWand.position, enemy);
                         }
+
                         break;
                     }
                 }
@@ -78,6 +81,7 @@ namespace DrawSpell
                 if (hp <= 0)
                 {
                     GameManager.instance.DoLose();
+                    /*EffectsManager.instance.;*/
                 }
             }
         }
@@ -89,6 +93,7 @@ namespace DrawSpell
             if (killCount >= levelCompletionKillCount)
             {
                 GameManager.instance.DoWin();
+                /*EffectsManager.instance.;*/
             }
         }
     }

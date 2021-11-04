@@ -6,8 +6,8 @@ using UnityEngine;
 public abstract class Spell : MonoBehaviour
 {
     [SerializeField] private Shape shape;
-    [SerializeField] private bool dealedDamage = false;
 
+    private bool dealedDamage = false;
     private ParticleSystem particles;
     private IDamageable target;
     private bool isCasted;
