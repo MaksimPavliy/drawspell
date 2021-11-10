@@ -4,7 +4,7 @@ public class TargetSpell : Spell
 {
     [SerializeField] private float flyingSpeed;
     [SerializeField] private float offsetByY = 1;
-
+    [SerializeField] private ParticleSystem OnDestroyParticles;
     private Vector3 targetPosition;
 
     void Update()
@@ -23,7 +23,14 @@ public class TargetSpell : Spell
             }
         }
         else
+        {
+            if (OnDestroyParticles)
+            {
+                var ps = Instantiate(OnDestroyParticles, null);
+                ps.transform.position = transform.position;
+            }
             gameObject.SetActive(false);
+        }
     }
 }
 

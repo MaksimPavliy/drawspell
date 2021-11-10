@@ -226,7 +226,7 @@ SkinnedMeshRenderer:
   m_GameObject: {fileID: 2410212396729706991}
   m_Enabled: 1
   m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
@@ -237,7 +237,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1710a4416e31ef64da2c9199bd75245a, type: 2}
+  - {fileID: 2100000, guid: 52062a632fa6c6e469eb9f819eb10b16, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -541,10 +541,10 @@ MonoBehaviour:
   HpShapes: {fileID: 2463722773315402945}
   damageToPlayer: 1
   spellsToKill:
-  - {fileID: 1013363342, guid: d79f03dd3c9b07c41a430faecdcdf500, type: 3}
-  - {fileID: 2577064108206919731, guid: ec40dcc0df25c9c44bb4f938a05e1482, type: 3}
-  additionalShapeHeight: 2
-  shapeOffset: 0.55
+  - {fileID: -2196525934189447514, guid: 53fe5cb5a61c4a54aac7930e4b102ad0, type: 3}
+  - {fileID: 2986606294554001447, guid: d8a84b1efade2ff4092eda2791774d98, type: 3}
+  additionalShapeHeight: 6
+  shapeOffset: 0.7
   enemyType: 3
 --- !u!95 &-7198403613738486748
 Animator:

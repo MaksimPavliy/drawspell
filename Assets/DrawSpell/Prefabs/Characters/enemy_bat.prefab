@@ -223,9 +223,9 @@ MonoBehaviour:
   HpShapes: {fileID: 4226551536743799486}
   damageToPlayer: 1
   spellsToKill:
-  - {fileID: 6334157283235517774, guid: 2747a61bc0fef1c4897ad59f548b1054, type: 3}
-  additionalShapeHeight: 1.9
-  shapeOffset: 0.6
+  - {fileID: -5727005749702448684, guid: c78a5e04107eb644fa03f2a7ea1ab7dc, type: 3}
+  additionalShapeHeight: 6
+  shapeOffset: 0.7
   enemyType: 4
 --- !u!95 &-5546366934677957192
 Animator:
