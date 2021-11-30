@@ -1,4 +1,5 @@
 using UnityEngine;
+using static Shape;
 
 public interface IDamageable
 {
@@ -7,5 +8,5 @@ public interface IDamageable
 
     GameObject gameObject { get; }
 
-    void TakeDamage(Shape shape);
+    void TakeDamage(ShapeType shapeType);
 }

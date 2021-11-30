@@ -13,7 +13,7 @@ public class AreaSpell : Spell
 
             if (Particles.time >= EmitionTimeBeforeDamage)
             {
-                Target.TakeDamage(Shape);
+                Target.TakeDamage(shapeType);
                 DealedDamage = true;
             }
         }

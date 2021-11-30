@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static Shape;
 
 namespace DrawSpell
 {
@@ -53,9 +54,9 @@ namespace DrawSpell
             }
         }
 
-        public void TakeDamage(Shape shape)
+        public void TakeDamage(ShapeType shapeType)
         {
-            shapes.Find(shapeClone => shapeClone.Type == shape.Type).gameObject.SetActive(false);
+            shapes.Find(shapeClone => shapeClone.Type == shapeType).gameObject.SetActive(false);
             activeShapesCount--;
 
             if (activeShapesCount <= 0)

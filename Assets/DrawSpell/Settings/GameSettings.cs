@@ -46,7 +46,9 @@ namespace DrawSpell
         {
             spell.DealedDamage = false;
             spell.IsCasted = true;
+            spell.shapeType = type;
             spell.gameObject.SetActive(true);
+            
         }
 
         public Spell CastSpellInstance(Vector3 position, Enemy enemy)

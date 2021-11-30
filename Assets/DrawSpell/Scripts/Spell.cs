@@ -3,17 +3,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Shape;
 
 public abstract class Spell : MonoBehaviour
 {
-    [SerializeField] private Shape shape;
+//    [SerializeField] private Shape shape;
 
     private bool dealedDamage = false;
     private ParticleSystem particles;
     private IDamageable target;
     private bool isCasted;
-
-    public Shape Shape => shape;
+    public ShapeType shapeType;
+  //  public Shape Shape => shape;
     public ParticleSystem Particles => particles;
 
     public bool DealedDamage { get => dealedDamage; set => dealedDamage = value; }

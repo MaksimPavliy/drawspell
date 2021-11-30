@@ -13,7 +13,7 @@ public class TargetSpell : Spell
         {
             if (Vector3.Distance(transform.position, Target.gameObject.transform.position) < 2f)
             {
-                Target.TakeDamage(Shape);
+                Target.TakeDamage(shapeType);
                 DealedDamage = true;
             }
             else
