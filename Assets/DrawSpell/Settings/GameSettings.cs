@@ -37,6 +37,7 @@ namespace DrawSpell
 
         void OnReturnedToPool(Spell spell)
         {
+            Pool.Release(spell);
         }
         void OnDestroyPoolObject(Spell spell)
         {
@@ -46,7 +47,7 @@ namespace DrawSpell
         {
             spell.DealedDamage = false;
             spell.IsCasted = true;
-            spell.shapeType = type;
+            spell.ShapeType = type;
             spell.gameObject.SetActive(true);
             
         }

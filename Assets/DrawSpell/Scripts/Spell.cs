@@ -13,7 +13,7 @@ public abstract class Spell : MonoBehaviour
     private ParticleSystem particles;
     private IDamageable target;
     private bool isCasted;
-    public ShapeType shapeType;
+    public ShapeType ShapeType { set; get; }
   //  public Shape Shape => shape;
     public ParticleSystem Particles => particles;
 

@@ -329,19 +329,19 @@ PrefabInstance:
     - target: {fileID: 1309531414322621435, guid: 7903728e31c76e842a27642f328cac16,
         type: 3}
       propertyPath: enemies.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1309531414322621435, guid: 7903728e31c76e842a27642f328cac16,
         type: 3}
       propertyPath: enemies.Array.data[0]
       value: 
-      objectReference: {fileID: 1066677440239219350, guid: 86cafdf348a475f4cbee8634a5b20a06,
+      objectReference: {fileID: 4083987138564853121, guid: 1db1a4bd7f1a49f40b1e64299483ffcc,
         type: 3}
     - target: {fileID: 1309531414322621435, guid: 7903728e31c76e842a27642f328cac16,
         type: 3}
       propertyPath: enemies.Array.data[1]
       value: 
-      objectReference: {fileID: 4083987138564853121, guid: 1db1a4bd7f1a49f40b1e64299483ffcc,
+      objectReference: {fileID: 1066677440239219350, guid: 86cafdf348a475f4cbee8634a5b20a06,
         type: 3}
     - target: {fileID: 1309531414322621435, guid: 7903728e31c76e842a27642f328cac16,
         type: 3}
@@ -349,10 +349,22 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7927770066082703314, guid: 577a16587498fe345a5a068cb5b94e67,
         type: 3}
+    - target: {fileID: 1309531414322621435, guid: 7903728e31c76e842a27642f328cac16,
+        type: 3}
+      propertyPath: enemies.Array.data[3]
+      value: 
+      objectReference: {fileID: 8007983580209018984, guid: 65885da7570df714eb2f1aac44312b0b,
+        type: 3}
+    - target: {fileID: 1309531414322621435, guid: 7903728e31c76e842a27642f328cac16,
+        type: 3}
+      propertyPath: enemies.Array.data[4]
+      value: 
+      objectReference: {fileID: 8007983580209018984, guid: 65885da7570df714eb2f1aac44312b0b,
+        type: 3}
     - target: {fileID: 2944376048012429256, guid: 7903728e31c76e842a27642f328cac16,
         type: 3}
       propertyPath: fingerDatas.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2944376048012429256, guid: 7903728e31c76e842a27642f328cac16,
         type: 3}

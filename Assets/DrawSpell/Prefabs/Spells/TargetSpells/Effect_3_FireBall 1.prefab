@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3211538030333789826
 Transform:
   m_ObjectHideFlags: 0
@@ -4850,7 +4850,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7efdd596f4151f44ebf0b08e94a2fcbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shape: {fileID: 3530814023973063086, guid: 58f4cb8891281b54aaede8d56a5bad3e, type: 3}
   flyingSpeed: 0.3
   offsetByY: 1
   OnDestroyParticles: {fileID: 979792046566659530, guid: 3055366773a739e4db14a47365af4386,
