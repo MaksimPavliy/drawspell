@@ -54,17 +54,12 @@ namespace DrawSpell
                     if (shape.IsEnabled && shape.Type == detector.Shape.GetComponent<Shape>().Type)
                     {
                         shape.EnableShape(false);
-                        Spell spell = enemy.SpellsToKill.Find(spell => shape.Type == spell.Shape.Type);
-                        spell.gameObject.SetActive(false);
+                        
+                        var spellInfo=GameSettings.instance.GetShapeInfo(shape.Type);
 
-                        if (spell.GetComponent<TargetSpell>() == null)
-                        {
-                            spell = EffectsManager.instance.FindSpellEffect(spell).PlayEffect(enemy.transform.position, enemy);
-                        }
-                        else
-                        {
-                            spell = EffectsManager.instance.FindSpellEffect(spell).PlayEffect(playerWand.position, enemy);
-                        }
+                        bool isTargetSpell = spellInfo.spell is TargetSpell;
+
+                        spellInfo.CastSpellInstance(isTargetSpell? playerWand.position: enemy.transform.position, enemy);
 
                         break;
                     }

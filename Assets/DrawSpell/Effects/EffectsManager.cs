@@ -55,6 +55,7 @@ namespace DrawSpell
 
         public EffectsList FindSpellEffect(Spell spell)
         {
+
             return spellPrefabs.Find(x => x.SpellPrefab == spell);
         }
     }

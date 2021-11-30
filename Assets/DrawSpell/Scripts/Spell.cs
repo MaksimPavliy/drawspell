@@ -1,4 +1,5 @@
 using Lean.Touch;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,7 @@ public abstract class Spell : MonoBehaviour
     public bool DealedDamage { get => dealedDamage; set => dealedDamage = value; }
     public IDamageable Target { get => target; set => target = value; }
     public bool IsCasted { get => isCasted; set => isCasted = value; }
+    public event Action<Spell> Disposed;
 
     void Start()
     {
@@ -29,6 +31,10 @@ public abstract class Spell : MonoBehaviour
         target.OnPlayerAttacked += SetSpellState;
     }
 
+    private void OnDisable()
+    {
+        Disposed?.Invoke(this);
+    }
     private void SetSpellState(IDamageable enemy)
     {
         if (Target == enemy)

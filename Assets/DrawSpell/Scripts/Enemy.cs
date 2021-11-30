@@ -67,10 +67,13 @@ namespace DrawSpell
         public void GenerateShapes()
         {
             shapeOffset = spellsToKill.Count == 1 ? 0 : shapeOffset;
-
-            foreach (var spell in spellsToKill)
+            var enemyInfo = GameSettings.instance.GetEnemyInfo(enemyType);
+            if (enemyInfo==null) return;
+            
+            foreach (var shape in enemyInfo.shapesToKill)
             {
-                shapes.Add(Instantiate(spell.Shape, new Vector3(transform.position.x + shapeOffset, spell.Shape.transform.position.y + additionalShapeHeight, transform.position.z),
+                var shapeInfo = GameSettings.instance.GetShapeInfo(shape);
+                shapes.Add(Instantiate(shapeInfo.shape, new Vector3(transform.position.x + shapeOffset, shapeInfo.shape.transform.position.y + additionalShapeHeight, transform.position.z),
                     Quaternion.Euler(0, 180, 0), HpShapes).GetComponent<Shape>());
                 shapeOffset = -shapeOffset;
             }
