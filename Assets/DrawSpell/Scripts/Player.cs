@@ -81,15 +81,22 @@ namespace DrawSpell
             }
         }
 
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Portal"))
+            {
+                GameManager.instance.DoWin();
+            }
+        }
         public void UpdateKillCount()
         {
             killCount++;
 
-            if (killCount >= levelCompletionKillCount)
-            {
-                GameManager.instance.DoWin();
-                /*EffectsManager.instance.;*/
-            }
+            //if (killCount >= levelCompletionKillCount)
+            //{
+            //    GameManager.instance.DoWin();
+            //    /*EffectsManager.instance.;*/
+            //}
         }
     }
 }
