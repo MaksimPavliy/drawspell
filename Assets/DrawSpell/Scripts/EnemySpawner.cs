@@ -7,16 +7,20 @@ using UnityEngine;
 namespace DrawSpell
 {
 
-    public class EnemySpawner : MonoBehaviour
+    public class EnemySpawner : MonoBehaviourHasInstance<EnemySpawner>
     {
         [SerializeField] private Enemy[] enemies;
         [SerializeField] private Player player;
         [SerializeField] private EnemyTrigger triggerPrefab;
         [SerializeField] private List<EnemyTrigger> triggers;
+        [SerializeField] private List<Enemy> spawnedEnemies = new List<Enemy>();
+        public List<Enemy> SpawnedEnemies => spawnedEnemies;
+
 
         private List<Enemy> list;
         private int randomEnemy;
-        private int spawnDistance = 50;
+        [SerializeField]
+        private int spawnDistance = 60;
         private float spawnDelay => DrawSpellGeneralConfig.instance.spawnDelay;
         private float minOffset = -1.6f;
         private float maxOffset = 1.6f;
@@ -71,7 +75,13 @@ namespace DrawSpell
         private void SpawnEnemy(Vector3 position)
         {
                 randomEnemy = UnityEngine.Random.Range(0, enemies.Length);
-                SpawnEnemyFromPool(position);
+                var enemy=SpawnEnemyFromPool(position);
+          
+        }
+
+        private void Enemy_Died(IDamageable damageable)
+        {
+            spawnedEnemies.Remove(damageable as Enemy);
         }
 
         public Enemy SpawnEnemyFromPool(Vector3 position)
@@ -83,19 +93,21 @@ namespace DrawSpell
             {
                 pooledEnemy = Instantiate(enemies[randomEnemy], position, Quaternion.identity, gameObject.transform);
                 pooledEnemy.Player = player;
-                pooledEnemy.GenerateShapes();
                 list.Add(pooledEnemy);
             }
             pooledEnemy.transform.position = position;
-            foreach (var shape in pooledEnemy.Shapes)
-            {
-                shape.EnableShape(true);
-                shape.gameObject.SetActive(true);
-            }
+            pooledEnemy.GenerateShapes();
             pooledEnemy.gameObject.SetActive(true);
-            player.Enemies.Add(pooledEnemy);
+            spawnedEnemies.Add(pooledEnemy);
+            pooledEnemy.Died += PooledEnemy_Killed;
+            //player.Enemies.Add(pooledEnemy);
 
             return pooledEnemy;
+        }
+
+        private void PooledEnemy_Killed(IDamageable obj)
+        {
+            spawnedEnemies.Remove(obj as Enemy);
         }
     }
 }

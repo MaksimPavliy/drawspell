@@ -56,7 +56,7 @@ namespace DrawSpell
                         abilityInstance = Instantiate(shield, transform.position, Quaternion.identity, player.gameObject.transform);
                         abilityType = AbilityType.shield;
                         AbilityEffects.Add(abilityInstance);
-                        player.ShieldIsActive = true;
+                     //   player.ShieldIsActive = true;
                         UseAbility(5, 10);
                         break;
 
@@ -84,7 +84,7 @@ namespace DrawSpell
         {
             if (abilityType == AbilityType.shield)
             {
-                player.ShieldIsActive = false;
+             //   player.ShieldIsActive = false;
             }
         }
     }

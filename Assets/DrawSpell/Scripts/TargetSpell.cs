@@ -1,36 +1,38 @@
 using UnityEngine;
-
-public class TargetSpell : Spell
+namespace DrawSpell
 {
-    [SerializeField] private float flyingSpeed;
-    [SerializeField] private float offsetByY = 1;
-    [SerializeField] private ParticleSystem OnDestroyParticles;
-    private Vector3 targetPosition;
-
-    void Update()
+    public class TargetSpell : Spell
     {
-        if (IsCasted && !DealedDamage)
+        [SerializeField] private float flyingSpeed;
+        [SerializeField] private float offsetByY = 1;
+        [SerializeField] private ParticleSystem OnDestroyParticles;
+        private Vector3 targetPosition;
+
+        void Update()
         {
-            if (Vector3.Distance(transform.position, Target.gameObject.transform.position) < 2f)
+            if (IsCasted && !DealedDamage)
             {
-                Target.TakeDamage(ShapeType);
-                DealedDamage = true;
+                if (Vector3.Distance(transform.position, Target.gameObject.transform.position) < 2f)
+                {
+                    Target.TakeDamage(ShapeType);
+                    DealedDamage = true;
+                }
+                else
+                {
+                    targetPosition = Target.gameObject.transform.position;
+                    transform.position = Vector3.MoveTowards(transform.position, new Vector3(targetPosition.x, targetPosition.y + offsetByY, targetPosition.z), flyingSpeed);
+                }
             }
             else
             {
-                targetPosition = Target.gameObject.transform.position;
-                transform.position = Vector3.MoveTowards(transform.position, new Vector3(targetPosition.x, targetPosition.y + offsetByY, targetPosition.z), flyingSpeed);
+                if (OnDestroyParticles)
+                {
+                    var ps = Instantiate(OnDestroyParticles, null);
+                    ps.transform.position = transform.position;
+                }
+                gameObject.SetActive(false);
             }
-        }
-        else
-        {
-            if (OnDestroyParticles)
-            {
-                var ps = Instantiate(OnDestroyParticles, null);
-                ps.transform.position = transform.position;
-            }
-            gameObject.SetActive(false);
         }
     }
-}
 
+}

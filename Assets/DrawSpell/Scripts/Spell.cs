@@ -5,42 +5,45 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Shape;
 
-public abstract class Spell : MonoBehaviour
+namespace DrawSpell
 {
-//    [SerializeField] private Shape shape;
-
-    private bool dealedDamage = false;
-    private ParticleSystem particles;
-    private IDamageable target;
-    private bool isCasted;
-    public ShapeType ShapeType { set; get; }
-  //  public Shape Shape => shape;
-    public ParticleSystem Particles => particles;
-
-    public bool DealedDamage { get => dealedDamage; set => dealedDamage = value; }
-    public IDamageable Target { get => target; set => target = value; }
-    public bool IsCasted { get => isCasted; set => isCasted = value; }
-    public event Action<Spell> Disposed;
-
-    void Start()
+    public abstract class Spell : MonoBehaviour
     {
-        if (GetComponent<ParticleSystem>() != null)
+        //    [SerializeField] private Shape shape;
+
+        private bool dealedDamage = false;
+        private ParticleSystem particles;
+        private IDamageable target;
+        private bool isCasted;
+        public ShapeType ShapeType { set; get; }
+        //  public Shape Shape => shape;
+        public ParticleSystem Particles => particles;
+
+        public bool DealedDamage { get => dealedDamage; set => dealedDamage = value; }
+        public IDamageable Target { get => target; set => target = value; }
+        public bool IsCasted { get => isCasted; set => isCasted = value; }
+        public event Action<Spell> Disposed;
+
+        void Start()
         {
-            particles = GetComponent<ParticleSystem>();
+            if (GetComponent<ParticleSystem>() != null)
+            {
+                particles = GetComponent<ParticleSystem>();
+            }
+
+            target.OnPlayerAttacked += SetSpellState;
         }
 
-        target.OnPlayerAttacked += SetSpellState;
-    }
-
-    private void OnDisable()
-    {
-        Disposed?.Invoke(this);
-    }
-    private void SetSpellState(IDamageable enemy)
-    {
-        if (Target == enemy)
+        private void OnDisable()
         {
-            dealedDamage = true;
+            Disposed?.Invoke(this);
+        }
+        private void SetSpellState(IDamageable enemy)
+        {
+            if (Target == enemy)
+            {
+                dealedDamage = true;
+            }
         }
     }
 }

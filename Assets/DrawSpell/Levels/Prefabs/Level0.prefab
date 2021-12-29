@@ -29,7 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5610666309692884504}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3115971303648090515
 MonoBehaviour:
@@ -99,7 +99,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5610666309692884504}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3944022676644302186
 MonoBehaviour:
@@ -239,7 +239,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5610666309692884504}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3220114213479745220
 MonoBehaviour:
@@ -308,12 +308,83 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2164913449589222634}
+  - {fileID: 427498979993915382}
   - {fileID: 5563646854968773206}
   - {fileID: 4940532955981846214}
   - {fileID: 8801441338557965551}
   m_Father: {fileID: 8233394532913058873}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7887932979717566999
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 427498979993915382}
+  - component: {fileID: 9065032101820437711}
+  m_Layer: 0
+  m_Name: LeanShapeDetector2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &427498979993915382
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7887932979717566999}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5610666309692884504}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9065032101820437711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7887932979717566999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cc4ffa09f886dc40a02871007517fdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Use:
+    Filter: 0
+    IgnoreStartedOverGui: 1
+    RequiredFingerCount: 0
+    RequiredMouseButtons: 0
+    RequiredSelectable: {fileID: 0}
+  shape: {fileID: 967059034993390418, guid: 72a5b97493f8bb949939420ef5be9e7b, type: 3}
+  stepThreshold: 1
+  distanceThreshold: 1.6
+  errorThreshold: 1.6
+  minimumPoints: -1
+  direction: 2
+  onDetected:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2089742346644732520}
+        m_TargetAssemblyTypeName: DrawSpell.Player, Assembly-CSharp
+        m_MethodName: Attack
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 9065032101820437711}
+          m_ObjectArgumentAssemblyTypeName: Lean.Touch.LeanShapeDetector, LeanTouchPlus
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &26481805639347965
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -668,8 +739,13 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 1309531414322621435, guid: 7903728e31c76e842a27642f328cac16,
         type: 3}
+      propertyPath: _spawnInterval
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1309531414322621435, guid: 7903728e31c76e842a27642f328cac16,
+        type: 3}
       propertyPath: enemies.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1309531414322621435, guid: 7903728e31c76e842a27642f328cac16,
         type: 3}
@@ -680,31 +756,31 @@ PrefabInstance:
         type: 3}
       propertyPath: enemies.Array.data[0]
       value: 
-      objectReference: {fileID: 4083987138564853121, guid: 1db1a4bd7f1a49f40b1e64299483ffcc,
+      objectReference: {fileID: 5544297011985149961, guid: 1dc68d29a729ead438eed414d9bc3cd1,
         type: 3}
     - target: {fileID: 1309531414322621435, guid: 7903728e31c76e842a27642f328cac16,
         type: 3}
       propertyPath: enemies.Array.data[1]
       value: 
-      objectReference: {fileID: 1066677440239219350, guid: 86cafdf348a475f4cbee8634a5b20a06,
+      objectReference: {fileID: 5544297011985149961, guid: b290d3cec45db7c4082ccae4b218074e,
         type: 3}
     - target: {fileID: 1309531414322621435, guid: 7903728e31c76e842a27642f328cac16,
         type: 3}
       propertyPath: enemies.Array.data[2]
       value: 
-      objectReference: {fileID: 7927770066082703314, guid: 577a16587498fe345a5a068cb5b94e67,
+      objectReference: {fileID: 5544297011985149961, guid: 04e7326982dc2614abeb8ce1c13f96e4,
         type: 3}
     - target: {fileID: 1309531414322621435, guid: 7903728e31c76e842a27642f328cac16,
         type: 3}
       propertyPath: enemies.Array.data[3]
       value: 
-      objectReference: {fileID: 8007983580209018984, guid: 65885da7570df714eb2f1aac44312b0b,
+      objectReference: {fileID: 5544297011985149961, guid: 7f864533856b5db45b15e6ba0604c620,
         type: 3}
     - target: {fileID: 1309531414322621435, guid: 7903728e31c76e842a27642f328cac16,
         type: 3}
       propertyPath: enemies.Array.data[4]
       value: 
-      objectReference: {fileID: 8007983580209018984, guid: 65885da7570df714eb2f1aac44312b0b,
+      objectReference: {fileID: 5544297011985149961, guid: 7c2f9f89cae86d5478d3909cb5b0faa2,
         type: 3}
     - target: {fileID: 1309531414322621435, guid: 7903728e31c76e842a27642f328cac16,
         type: 3}
@@ -756,6 +832,11 @@ PrefabInstance:
       propertyPath: triggers.Array.data[9]
       value: 
       objectReference: {fileID: 4733310446026386250}
+    - target: {fileID: 2944376047512181079, guid: 7903728e31c76e842a27642f328cac16,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2944376048012429256, guid: 7903728e31c76e842a27642f328cac16,
         type: 3}
       propertyPath: fingerDatas.Array.size

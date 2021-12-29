@@ -6,7 +6,12 @@ ModelImporter:
   - first:
       74: 8706325329812504548
     second: spirit_move
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: atlas
+    second: {fileID: 2100000, guid: 1710a4416e31ef64da2c9199bd75245a, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

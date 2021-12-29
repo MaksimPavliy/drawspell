@@ -1,25 +1,28 @@
 using UnityEngine;
 
-public class AreaSpell : Spell
+namespace DrawSpell
 {
-    [SerializeField] private float EmitionTimeBeforeDamage;
-    [SerializeField] private float offset;
-
-    void Update()
+    public class AreaSpell : Spell
     {
-        if (!DealedDamage)
-        {
-            transform.position = new Vector3(Target.gameObject.transform.position.x, Target.gameObject.transform.position.y - offset, Target.gameObject.transform.position.z);
+        [SerializeField] private float EmitionTimeBeforeDamage;
+        [SerializeField] private float offset;
 
-            if (Particles.time >= EmitionTimeBeforeDamage)
-            {
-                Target.TakeDamage(ShapeType);
-                DealedDamage = true;
-            }
-        }
-        else if (!Particles.IsAlive())
+        void Update()
         {
-            gameObject.SetActive(false);
+            if (!DealedDamage)
+            {
+                transform.position = new Vector3(Target.gameObject.transform.position.x, Target.gameObject.transform.position.y - offset, Target.gameObject.transform.position.z);
+
+                if (Particles.time >= EmitionTimeBeforeDamage)
+                {
+                    Target.TakeDamage(ShapeType);
+                    DealedDamage = true;
+                }
+            }
+            else if (!Particles.IsAlive())
+            {
+                gameObject.SetActive(false);
+            }
         }
     }
 }

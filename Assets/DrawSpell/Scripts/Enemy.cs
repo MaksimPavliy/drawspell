@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using static Shape;
 
@@ -10,31 +10,29 @@ namespace DrawSpell
         private DrawSpellGeneralConfig config => DrawSpellGeneralConfig.instance;
 
         [SerializeField] private float runspeed => config.speedEnemy;
-        [SerializeField] private Transform HpShapes;
+        [SerializeField] private HPShapes hpShapes;
         [SerializeField] private int damageToPlayer = 1;
-        [SerializeField] private List<Spell> spellsToKill;
         [SerializeField] private float additionalShapeHeight;
         [SerializeField] private float shapeOffset = 0.6f;
         [SerializeField] private EnemyType enemyType;
 
         private CharacterController enemyController;
-        private List<Shape> shapes = new List<Shape>();
         private Player player;
         private float moveForward = 1;
         private float attackAnimationDistance = 5f;
-        private int activeShapesCount;
 
         public EnemyType EnemyType => enemyType;
         public Player Player { set => player = value; }
-        public List<Spell> SpellsToKill => spellsToKill;
-        public List<Shape> Shapes => shapes;
+
+        public int HP => throw new NotImplementedException();
+
+        public HPShapes Shapes => hpShapes;
 
         public event IDamageable.OnDamage OnPlayerAttacked;
-
+        public event IDamageable.OnDied Died;
         private void Start()
         {
             enemyController = GetComponent<CharacterController>();
-            activeShapesCount = shapes.Count;
         }
 
         void Update()
@@ -56,36 +54,26 @@ namespace DrawSpell
 
         public void TakeDamage(ShapeType shapeType)
         {
-            shapes.Find(shapeClone => shapeClone.Type == shapeType).gameObject.SetActive(false);
-            activeShapesCount--;
-
-            if (activeShapesCount <= 0)
+            hpShapes.DisposeShape(shapeType);
+            if (hpShapes.Shapes.Count <= 0)
             {
+                Died?.Invoke(this);
                 gameObject.SetActive(false);
             }
         }
 
         public void GenerateShapes()
         {
-            shapeOffset = spellsToKill.Count == 1 ? 0 : shapeOffset;
             var enemyInfo = GameSettings.instance.GetEnemyInfo(enemyType);
             if (enemyInfo==null) return;
-            
+
+            hpShapes.ClearShapes();
             foreach (var shape in enemyInfo.shapesToKill)
             {
-                var shapeInfo = GameSettings.instance.GetShapeInfo(shape);
-                shapes.Add(Instantiate(shapeInfo.shape, new Vector3(transform.position.x + shapeOffset, shapeInfo.shape.transform.position.y + additionalShapeHeight, transform.position.z),
-                    Quaternion.Euler(0, 180, 0), HpShapes).GetComponent<Shape>());
-                shapeOffset = -shapeOffset;
+                hpShapes.CreateShape(shape);
             }
         }
 
-        private void OnDisable()
-        {
-            player.UpdateKillCount();
-            player.Enemies.Remove(this);
-            activeShapesCount = shapes.Count;
-        }
     }
 
     public enum EnemyType
