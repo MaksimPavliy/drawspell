@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Lean.Touch;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,35 +6,8 @@ using UnityEngine;
 
 namespace DrawSpell
 {
-    public class Boss : MonoBehaviour, IDamageable
-    {
-        public event IDamageable.OnDamage OnPlayerAttacked;
-        public event IDamageable.OnDied Died;
-
-        public float _hp = 200;
-
-        public int HP => throw new System.NotImplementedException();
-
-        public HPShapes Shapes => throw new System.NotImplementedException();
-
-        public void TakeDamage(Shape.ShapeType shapeType)
-        {
-            _hp -= 10;
-            Debug.Log($"Boss hp {_hp}");
-        }
-
-        private IEnumerator ThinkingRoutine()
-        {
-            yield return new WaitForSeconds(1f);
-        }
-
-        private void CastSpell()
-        {
-
-        }
-    }
     [RequireComponent(typeof(CharacterController))]
-    public class Player : MonoBehaviour, IDamageable
+    public class Player : MonoBehaviour, IDamageable, ISpellTarget
     {
         [SerializeField] private float runspeed;
         [SerializeField] private Transform playerWand;
@@ -41,34 +15,62 @@ namespace DrawSpell
         private DrawSpellGeneralConfig config => DrawSpellGeneralConfig.instance;
         private CharacterController characterController;
         private float moveForward = 1;
-        private int hp = 1;
+        private int hp = 5;
 
-        public event IDamageable.OnDamage OnPlayerAttacked;
-        public event IDamageable.OnDied Died;
+        public event OnDamage OnPlayerAttacked;
+        public event OnDied Died;
+        public event OnDamage SpellCasted;
 
-        public virtual List<Enemy> Enemies => EnemySpawner.instance.SpawnedEnemies;
-
+        private List<ISpellTarget> _spellTargets = new List<ISpellTarget>();
         public int HP => hp;
 
-        public HPShapes Shapes => null;
-        [SerializeField] private HPShapes shapes;
+        public SpellShapes Shapes => null;
 
+        public Transform Transform => transform;
+
+        [SerializeField] private Transform _shapeDetectors;
+
+        private bool _isWalking = false;
+
+        [SerializeField] private HPView hpView;
+        [SerializeField] private Animator animator;
+
+        private bool _isWin = false;
         void Start()
         {
             runspeed = 0f;
 
             characterController = GetComponent<CharacterController>();
-            shapes.CreateShape(Shape.ShapeType.ShapeType1);
+
+            EnemySpawner.instance.EnemySpawned += Instance_EnemySpawned;
+
+            var shapeDetectors = _shapeDetectors.GetComponentsInChildren<LeanShapeDetector>();
+            for (int i = 0; i < shapeDetectors.Length; i++)
+            {
+                var detector = shapeDetectors[i];
+                detector.OnDetected.AddListener((LeanFinger finger) => Attack(detector));
+            }
+            hpView.InitHP(HP);
         }
 
+        private void Instance_EnemySpawned(Enemy obj)
+        {
+            _spellTargets.Add(obj);
+            obj.Died += (IDamageable damageable) => _spellTargets.Remove(damageable as ISpellTarget);
+        }
+
+
+        public void Walk() => _isWalking = true;
+        public void Stop() => _isWalking = false;
         public void OnPlay()
         {
             runspeed = config.speedPlayer;
+            Walk();
         }
 
         void Update()
         {
-            if (GameManager.instance.IsPlaying)
+            if (_isWalking)
             {
                 transform.forward = new Vector3(0, 0, moveForward);
 
@@ -79,10 +81,17 @@ namespace DrawSpell
 
         public void Attack(Shape.ShapeType shapeType)
         {
-            Debug.Log(shapeType);
-            foreach (var enemy in Enemies)
+            animator.SetTrigger("Attack");
+            StartCoroutine(CastRoutine(shapeType));
+         
+        }
+        private IEnumerator CastRoutine(Shape.ShapeType shapeType)
+        {
+            yield return new WaitForSeconds(0.4f);
+
+            foreach (var target in _spellTargets)
             {
-                foreach (var shape in enemy.Shapes.Shapes)
+                foreach (var shape in target.Shapes.Shapes)
                 {
                     if (shape.IsEnabled && shape.Type == shapeType)
                     {
@@ -92,7 +101,7 @@ namespace DrawSpell
 
                         bool isTargetSpell = spellInfo.spell is TargetSpell;
 
-                        spellInfo.CastSpellInstance(isTargetSpell ? playerWand.position : enemy.transform.position, enemy);
+                        spellInfo.CastSpellInstance(isTargetSpell ? playerWand.position : (target as IDamageable).Transform.position, target);
 
                         break;
                     }
@@ -102,17 +111,18 @@ namespace DrawSpell
         public void Attack(LeanShapeDetector detector)
         {
             Attack(detector.Shape.GetComponent<Shape>().Type);
-          
         }
 
         public void TakeDamage(int damageTaken)
         {
+            if (_isWin) return;
+            hpView.TakeDamage();
             hp -= damageTaken;
 
             if (hp <= 0)
             {
+                Died?.Invoke(this);
                 GameManager.instance.DoLose();
-                /*EffectsManager.instance.;*/
             }
         }
 
@@ -121,12 +131,35 @@ namespace DrawSpell
             if (other.CompareTag("Portal"))
             {
                 GameManager.instance.DoWin();
+                _isWalking = false;
+                float duration = 1;
+                transform.DOMove(other.transform.position + Vector3.up * 3f+Vector3.forward*0.5f, duration).OnComplete(() => GameManager.instance.DoWin());
+                transform.DOScale(0, duration);
+                transform.DORotate(new Vector3(0, 180, 0), duration/10f).SetLoops(-1, LoopType.Incremental);
+            } else if (other.CompareTag("BossArea"))
+            {
+                _isWalking = false;
+                _spellTargets.Clear();
+                _spellTargets.Add(Boss.instance);
+                Boss.instance.SetSpellTarget(this);
+                Boss.instance.Died +=(IDamageable damageable) =>
+                {
+                    _spellTargets.Remove(damageable as ISpellTarget);
+                    StartCoroutine(BossDiedRoutine());
+                    _isWin = true;
+                };
             }
+        }
+
+        private IEnumerator BossDiedRoutine()
+        {
+            yield return new WaitForSeconds(1.5f);
+            _isWalking = true;
         }
 
         public void TakeDamage(Shape.ShapeType shapeType)
         {
-            hp--;
+            TakeDamage(1);
         }
     }
 }

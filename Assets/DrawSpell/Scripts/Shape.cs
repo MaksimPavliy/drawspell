@@ -15,7 +15,9 @@ public class Shape : MonoBehaviour
         ShapeType2,
         ShapeType3,
         ShapeType4,
-        ShapeType5
+        ShapeType5,
+        ShapeType6,
+        ShapeType7,
     }
 
     public void EnableShape(bool value)

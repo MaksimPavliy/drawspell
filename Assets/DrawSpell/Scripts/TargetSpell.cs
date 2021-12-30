@@ -12,14 +12,14 @@ namespace DrawSpell
         {
             if (IsCasted && !DealedDamage)
             {
-                if (Vector3.Distance(transform.position, Target.gameObject.transform.position) < 2f)
+                if (Vector3.Distance(transform.position, Damageable.Transform.position) < 2f)
                 {
-                    Target.TakeDamage(ShapeType);
+                 Target.TakeDamage(ShapeType);
                     DealedDamage = true;
                 }
                 else
                 {
-                    targetPosition = Target.gameObject.transform.position;
+                    targetPosition = Damageable.Transform.position;
                     transform.position = Vector3.MoveTowards(transform.position, new Vector3(targetPosition.x, targetPosition.y + offsetByY, targetPosition.z), flyingSpeed);
                 }
             }

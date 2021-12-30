@@ -4850,7 +4850,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7efdd596f4151f44ebf0b08e94a2fcbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flyingSpeed: 0.7
+  flyingSpeed: 2
   offsetByY: 1
   OnDestroyParticles: {fileID: 979792046566659530, guid: 3055366773a739e4db14a47365af4386,
     type: 3}

@@ -4,7 +4,7 @@ using static Shape;
 
 namespace DrawSpell
 {
-    public class HPShapes : MonoBehaviour
+    public class SpellShapes : MonoBehaviour
     {
         private List<Shape> _shapes = new List<Shape>();
         public List<Shape> Shapes => _shapes;

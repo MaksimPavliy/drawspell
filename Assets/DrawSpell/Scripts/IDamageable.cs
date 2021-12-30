@@ -2,16 +2,22 @@ using System;
 using UnityEngine;
 using static Shape;
 
-namespace DrawSpell {
+namespace DrawSpell
+{
+    public delegate void OnDamage(IDamageable damageable);
+    public delegate void OnDied(IDamageable damageable);
     public interface IDamageable
     {
-        public delegate void OnDamage(IDamageable damageable);
-        public delegate void OnDied(IDamageable damageable);
-        event OnDamage OnPlayerAttacked;
         public event OnDied Died;
-        GameObject gameObject { get; }
+        Transform Transform { get; }
         public int HP { get; }
-        public HPShapes Shapes { get; }
+        void TakeDamage(int damage);
+    }
+
+    public interface ISpellTarget
+    {
+        event OnDamage SpellCasted;
+        public SpellShapes Shapes { get; }
         void TakeDamage(ShapeType shapeType);
     }
 }

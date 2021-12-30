@@ -31,6 +31,8 @@ namespace DrawSpell
         private float _spawnIntervalDeviation = 4;
         [SerializeField]
         private float _enemiesCount = 10;
+
+        public event Action<Enemy> EnemySpawned;
         public void OnPlay()
         {
           //  StartCoroutine(SpawnEnemy());
@@ -76,6 +78,7 @@ namespace DrawSpell
         {
                 randomEnemy = UnityEngine.Random.Range(0, enemies.Length);
                 var enemy=SpawnEnemyFromPool(position);
+            EnemySpawned?.Invoke(enemy);
           
         }
 

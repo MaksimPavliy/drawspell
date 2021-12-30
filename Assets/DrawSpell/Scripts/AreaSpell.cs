@@ -11,12 +11,12 @@ namespace DrawSpell
         {
             if (!DealedDamage)
             {
-                transform.position = new Vector3(Target.gameObject.transform.position.x, Target.gameObject.transform.position.y - offset, Target.gameObject.transform.position.z);
+                transform.position = new Vector3(Damageable.Transform.position.x, Damageable.Transform.position.y - offset, Damageable.Transform.position.z);
 
                 if (Particles.time >= EmitionTimeBeforeDamage)
                 {
-                    Target.TakeDamage(ShapeType);
-                    DealedDamage = true;
+                  Target.TakeDamage(ShapeType);
+                   DealedDamage = true;
                 }
             }
             else if (!Particles.IsAlive())

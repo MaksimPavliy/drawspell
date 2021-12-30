@@ -13,14 +13,15 @@ namespace DrawSpell
 
         private bool dealedDamage = false;
         private ParticleSystem particles;
-        private IDamageable target;
+        private ISpellTarget target;
         private bool isCasted;
         public ShapeType ShapeType { set; get; }
         //  public Shape Shape => shape;
         public ParticleSystem Particles => particles;
 
         public bool DealedDamage { get => dealedDamage; set => dealedDamage = value; }
-        public IDamageable Target { get => target; set => target = value; }
+        public ISpellTarget Target { get => target; set => target = value; }
+        public IDamageable Damageable => (IDamageable)Target;
         public bool IsCasted { get => isCasted; set => isCasted = value; }
         public event Action<Spell> Disposed;
 
@@ -31,7 +32,7 @@ namespace DrawSpell
                 particles = GetComponent<ParticleSystem>();
             }
 
-            target.OnPlayerAttacked += SetSpellState;
+            target.SpellCasted += SetSpellState;
         }
 
         private void OnDisable()

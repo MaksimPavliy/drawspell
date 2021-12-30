@@ -63,7 +63,7 @@ GameObject:
   - component: {fileID: 4083987138564853121}
   m_Layer: 0
   m_Name: _enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -116,8 +116,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hpShapes: {fileID: 6726358851180930097}
   damageToPlayer: 1
-  additionalShapeHeight: 6
-  shapeOffset: 0.7
   enemyType: 4
 --- !u!1 &6957586666907044844
 GameObject:

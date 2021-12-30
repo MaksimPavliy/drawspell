@@ -52,11 +52,11 @@ namespace DrawSpell
             
         }
 
-        public Spell CastSpellInstance(Vector3 position, Enemy enemy)
+        public Spell CastSpellInstance(Vector3 position, ISpellTarget target)
         {
             var spell=Pool.Get();
             spell.transform.position = position;
-            spell.Target = enemy;
+            spell.Target = target;
             return spell;
         }
     }

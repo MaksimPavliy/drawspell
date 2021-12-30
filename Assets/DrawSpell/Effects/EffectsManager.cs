@@ -48,15 +48,66 @@ namespace DrawSpell
 
     }
 
+    [Serializable]
+    public class ParticleList
+    {
+        private List<ParticleSystem> list;
+
+        [SerializeField]
+        private ParticleSystem spellPrefab;
+        [SerializeField]
+        private Transform parent;
+
+        public void Clear()
+        {
+            if (list == null) list = new List<ParticleSystem>();
+
+            foreach (var spellEffect in list)
+            {
+                GameObject.Destroy(spellEffect.gameObject);
+            }
+            list.Clear();
+        }
+        public ParticleSystem PlayEffect(Vector3 position)
+        {
+            if (list == null) list = new List<ParticleSystem>();
+
+            var effect = list.Find(x => x != null && !x.gameObject.activeSelf);
+            if (!effect)
+            {
+                effect = GameObject.Instantiate(spellPrefab, parent);
+                list.Add(effect);
+            }
+            effect.transform.position = position;
+            effect.gameObject.SetActive(true);
+
+            return effect;
+        }
+
+    }
+
     public class EffectsManager : MonoBehaviourHasInstance<EffectsManager>
     {
         [SerializeField]
         private List<EffectsList> spellPrefabs;
-
+        [SerializeField]
+        private ParticleList brokenHeart;
+        [SerializeField]
+        private ParticleList slashEffect;
         public EffectsList FindSpellEffect(Spell spell)
         {
 
             return spellPrefabs.Find(x => x.SpellPrefab == spell);
+        }
+
+        public void playBrokenHeart(Vector3 position)
+        {
+            brokenHeart.PlayEffect(position);
+        }
+
+        public void playSlashEffect(Vector3 position)
+        {
+            slashEffect.PlayEffect(position);
         }
     }
 }

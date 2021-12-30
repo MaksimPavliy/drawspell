@@ -41,3 +41,11 @@ MonoBehaviour:
     shape: {fileID: 3214908483793330909, guid: dfff312f149803545a75c58569fc6b1c, type: 3}
     spell: {fileID: -2589067089898894262, guid: 623453442663ac4408547ea9ab7fe66c,
       type: 3}
+  - type: 5
+    shape: {fileID: 3214908483793330909, guid: dfff312f149803545a75c58569fc6b1c, type: 3}
+    spell: {fileID: -2589067089898894262, guid: 623453442663ac4408547ea9ab7fe66c,
+      type: 3}
+  - type: 6
+    shape: {fileID: 3214908483793330909, guid: dfff312f149803545a75c58569fc6b1c, type: 3}
+    spell: {fileID: -2589067089898894262, guid: 623453442663ac4408547ea9ab7fe66c,
+      type: 3}

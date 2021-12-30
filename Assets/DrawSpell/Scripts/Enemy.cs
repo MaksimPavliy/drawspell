@@ -1,19 +1,16 @@
-using System;
 using UnityEngine;
 using static Shape;
 
 namespace DrawSpell
 {
     [RequireComponent(typeof(CharacterController))]
-    public class Enemy : MonoBehaviour, IDamageable
+    public class Enemy : MonoBehaviour, IDamageable, ISpellTarget
     {
         private DrawSpellGeneralConfig config => DrawSpellGeneralConfig.instance;
 
         [SerializeField] private float runspeed => config.speedEnemy;
-        [SerializeField] private HPShapes hpShapes;
+        [SerializeField] private SpellShapes hpShapes;
         [SerializeField] private int damageToPlayer = 1;
-        [SerializeField] private float additionalShapeHeight;
-        [SerializeField] private float shapeOffset = 0.6f;
         [SerializeField] private EnemyType enemyType;
 
         private CharacterController enemyController;
@@ -24,12 +21,16 @@ namespace DrawSpell
         public EnemyType EnemyType => enemyType;
         public Player Player { set => player = value; }
 
-        public int HP => throw new NotImplementedException();
+        public int HP => hpShapes.Shapes.Count;
 
-        public HPShapes Shapes => hpShapes;
+        public SpellShapes Shapes => hpShapes;
 
-        public event IDamageable.OnDamage OnPlayerAttacked;
-        public event IDamageable.OnDied Died;
+        public Transform Transform => transform;
+
+        public event OnDamage OnPlayerAttacked;
+        public event OnDied Died;
+        public event OnDamage SpellCasted;
+
         private void Start()
         {
             enemyController = GetComponent<CharacterController>();
@@ -45,21 +46,18 @@ namespace DrawSpell
 
                 if (Vector3.Distance(player.transform.position, transform.position) < attackAnimationDistance)
                 {
-                    OnPlayerAttacked?.Invoke(this);
+                    EffectsManager.instance.playSlashEffect(player.transform.position + Vector3.up * 1.5f);
                     player.TakeDamage(damageToPlayer);
                     gameObject.SetActive(false);
                 }
             }
         }
 
+
         public void TakeDamage(ShapeType shapeType)
         {
             hpShapes.DisposeShape(shapeType);
-            if (hpShapes.Shapes.Count <= 0)
-            {
-                Died?.Invoke(this);
-                gameObject.SetActive(false);
-            }
+            TakeDamage(1);
         }
 
         public void GenerateShapes()
@@ -74,6 +72,14 @@ namespace DrawSpell
             }
         }
 
+        public void TakeDamage(int damage)
+        {
+            if (HP <= 0)
+            {
+                Died?.Invoke(this);
+                gameObject.SetActive(false);
+            }
+        }
     }
 
     public enum EnemyType
