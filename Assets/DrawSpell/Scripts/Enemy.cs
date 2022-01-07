@@ -8,7 +8,8 @@ namespace DrawSpell
     {
         private DrawSpellGeneralConfig config => DrawSpellGeneralConfig.instance;
 
-        [SerializeField] private float runspeed => config.speedEnemy;
+        int LocationIndex => DrawSpellRoot.instance.levels.currLocationInd;
+        [SerializeField] private float runspeed => GameManager.instance.EnemiesSpeed+ (LocationIndex+1)*0.1f;
         [SerializeField] private SpellShapes hpShapes;
         [SerializeField] private int damageToPlayer = 1;
         [SerializeField] private EnemyType enemyType;

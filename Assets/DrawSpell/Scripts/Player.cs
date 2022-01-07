@@ -1,5 +1,6 @@
 using DG.Tweening;
 using Lean.Touch;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,6 +36,7 @@ namespace DrawSpell
         [SerializeField] private HPView hpView;
         [SerializeField] private Animator animator;
 
+        public event Action LevelPassed;
         private bool _isWin = false;
         void Start()
         {
@@ -123,6 +125,7 @@ namespace DrawSpell
             {
                 Died?.Invoke(this);
                 GameManager.instance.DoLose();
+                animator.SetTrigger("Die");
             }
         }
 
@@ -133,22 +136,41 @@ namespace DrawSpell
                 GameManager.instance.DoWin();
                 _isWalking = false;
                 float duration = 1;
-                transform.DOMove(other.transform.position + Vector3.up * 3f+Vector3.forward*0.5f, duration).OnComplete(() => GameManager.instance.DoWin());
+                transform.DOMove(other.transform.position + Vector3.up * 3f + Vector3.forward * 0.5f, duration).OnComplete(() => GameManager.instance.DoWin());
                 transform.DOScale(0, duration);
-                transform.DORotate(new Vector3(0, 180, 0), duration/10f).SetLoops(-1, LoopType.Incremental);
+                transform.DORotate(new Vector3(0, 180, 0), duration / 10f).SetLoops(-1, LoopType.Incremental);
             } else if (other.CompareTag("BossArea"))
             {
                 _isWalking = false;
                 _spellTargets.Clear();
-                _spellTargets.Add(Boss.instance);
-                Boss.instance.SetSpellTarget(this);
-                Boss.instance.Died +=(IDamageable damageable) =>
+
+                if (Boss.instance)
                 {
-                    _spellTargets.Remove(damageable as ISpellTarget);
-                    StartCoroutine(BossDiedRoutine());
-                    _isWin = true;
-                };
+
+                    _spellTargets.Add(Boss.instance);
+                    Boss.instance.SetSpellTarget(this);
+                    Boss.instance.Died += (IDamageable damageable) =>
+                     {
+                         _spellTargets.Remove(damageable as ISpellTarget);
+                         Win();
+                     };
+                }
+                else
+                {
+                    Win();
+                }
             }
+        }
+
+        private void OnDestroy()
+        {
+            transform.DOComplete();
+        }
+        private void Win()
+        {
+            StartCoroutine(BossDiedRoutine());
+            _isWin = true;
+            LevelPassed?.Invoke();
         }
 
         private IEnumerator BossDiedRoutine()

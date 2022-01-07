@@ -1,5 +1,6 @@
 ﻿using FriendsGamesTools;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace DrawSpell
@@ -18,8 +19,15 @@ namespace DrawSpell
         [SerializeField]
         private int strength = 5;
 
+        [SerializeField] private float m_attackSpeed = 1;
+
         [SerializeField] private Transform _spellOrigin;
         [SerializeField] private Animator animator;
+        [SerializeField] private List<Shape.ShapeType> allowedShapes;
+        private void Awake()
+        {
+            animator.SetFloat("AttackSpeed", m_attackSpeed);
+        }
         public void TakeDamage(Shape.ShapeType shapeType)
         {
             Shapes.DisposeShape(shapeType);
@@ -47,7 +55,7 @@ namespace DrawSpell
         {
             for (int i = 0; i < strength; i++)
             {
-                _shapes.CreateShape(Utils.RandomEnumElement<Shape.ShapeType>());
+                _shapes.CreateShape(Utils.RandomElement(allowedShapes));
 
             }
             _shapes.gameObject.SetActive(false);
@@ -55,6 +63,7 @@ namespace DrawSpell
         private void OnValidate()
         {
             if (strength < 1) strength = 1;
+            if (animator == null) animator = GetComponentInChildren<Animator>();
         }
         private IEnumerator ThinkingRoutine()
         {
@@ -68,6 +77,7 @@ namespace DrawSpell
                 yield return new WaitForSeconds(0.5f);
                 if (_spellTarget == null) break;
                 CastRandomSpell();
+                yield return new WaitForSeconds(1.5f);
             }
         }
         public void Attack(Shape.ShapeType shapeType)
@@ -90,7 +100,8 @@ namespace DrawSpell
             if (HP <= 0)
             {
                 Died?.Invoke(this);
-                gameObject.SetActive(false);
+                //  gameObject.SetActive(false);
+                animator.SetTrigger("Die");
                 StopAllCoroutines();
             }
         }

@@ -1,32 +1,20 @@
 fileFormatVersion: 2
-guid: 683bb5b80bee957408454bd82c2431fa
+guid: 97fde573b98b3d64c801234ea42c506a
 ModelImporter:
   serializedVersion: 21100
   internalIDToNameTable:
   - first:
-      74: -9219100617316212870
-    second: player_idle
+      74: -2463067850366235345
+    second: boss_musse_idle
   - first:
-      74: 1319407155293532605
-    second: Armature.001|Armature.001|player_idle|player_idle
+      74: -8314881335501967033
+    second: boss_musse_death
   - first:
-      74: 6720303635017113406
-    second: Attack
+      74: -7251578984717667896
+    second: boss_musse_cast
   - first:
-      74: -1775205700603990715
-    second: prepareCast
-  - first:
-      74: 682591194561522098
-    second: player_idle
-  - first:
-      74: 2630303152526351697
-    second: player_attack
-  - first:
-      74: -8250255578033153044
-    second: player_death
-  - first:
-      74: -2041171903189940578
-    second: cast
+      74: -8389709310657346761
+    second: boss_musse_attack
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -61,11 +49,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: player_idle
-      takeName: player_idle
+      name: boss_musse_idle
+      takeName: boss_musse_idle
       internalID: 0
       firstFrame: 0
-      lastFrame: 40
+      lastFrame: 80
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -73,7 +61,7 @@ ModelImporter:
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 1
-      loopBlend: 1
+      loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
@@ -90,11 +78,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: player_attack
-      takeName: player_attack
+      name: boss_musse_death
+      takeName: boss_musse_death
       internalID: 0
       firstFrame: 0
-      lastFrame: 20
+      lastFrame: 35
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -119,18 +107,18 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: player_death
-      takeName: player_death
+      name: boss_musse_cast
+      takeName: boss_musse_cast
       internalID: 0
       firstFrame: 0
-      lastFrame: 38
+      lastFrame: 50
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -148,11 +136,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: cast
-      takeName: player_idle
+      name: boss_musse_attack
+      takeName: boss_musse_attack
       internalID: 0
       firstFrame: 0
-      lastFrame: 40
+      lastFrame: 50
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
