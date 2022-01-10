@@ -11,13 +11,15 @@ public class Shape : MonoBehaviour
 
     public enum ShapeType : byte
     {
-        ShapeType1,
-        ShapeType2,
-        ShapeType3,
-        ShapeType4,
-        ShapeType5,
-        ShapeType6,
-        ShapeType7,
+        Shape_Vigvam,
+        Shape_V,
+        Shape_Lightning,
+        Shape_Z,
+        Shape_L,
+        Shape_I,
+        Shape_Stroke,
+        Shape_Slash,
+        Shape_CounterSlash,
     }
 
     public void EnableShape(bool value)

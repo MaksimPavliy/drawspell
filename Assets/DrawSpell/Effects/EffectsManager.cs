@@ -89,17 +89,9 @@ namespace DrawSpell
     public class EffectsManager : MonoBehaviourHasInstance<EffectsManager>
     {
         [SerializeField]
-        private List<EffectsList> spellPrefabs;
-        [SerializeField]
         private ParticleList brokenHeart;
         [SerializeField]
         private ParticleList slashEffect;
-        public EffectsList FindSpellEffect(Spell spell)
-        {
-
-            return spellPrefabs.Find(x => x.SpellPrefab == spell);
-        }
-
         public void playBrokenHeart(Vector3 position)
         {
             brokenHeart.PlayEffect(position);

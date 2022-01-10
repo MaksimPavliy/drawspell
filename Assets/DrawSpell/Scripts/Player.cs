@@ -1,9 +1,11 @@
 using DG.Tweening;
+using DigitalRubyShared;
 using Lean.Touch;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace DrawSpell
 {
@@ -50,9 +52,17 @@ namespace DrawSpell
             for (int i = 0; i < shapeDetectors.Length; i++)
             {
                 var detector = shapeDetectors[i];
-                detector.OnDetected.AddListener((LeanFinger finger) => Attack(detector));
+              //  detector.OnDetected.AddListener((LeanFinger finger) => Attack(detector));
             }
             hpView.InitHP(HP);
+
+            ShapeRecognizer.instance.ShapeRecognized += OnShapeRecognized;
+
+            }
+
+        private void OnShapeRecognized(Shape.ShapeType shapeType)
+        {
+            Attack(shapeType);
         }
 
         private void Instance_EnemySpawned(Enemy obj)
@@ -89,6 +99,7 @@ namespace DrawSpell
         }
         private IEnumerator CastRoutine(Shape.ShapeType shapeType)
         {
+            Debug.Log("Cast");
             yield return new WaitForSeconds(0.4f);
 
             foreach (var target in _spellTargets)
@@ -104,7 +115,7 @@ namespace DrawSpell
                         bool isTargetSpell = spellInfo.spell is TargetSpell;
 
                         spellInfo.CastSpellInstance(isTargetSpell ? playerWand.position : (target as IDamageable).Transform.position, target);
-
+                        Debug.Log(shapeType);
                         break;
                     }
                 }
@@ -143,7 +154,6 @@ namespace DrawSpell
             {
                 _isWalking = false;
                 _spellTargets.Clear();
-
                 if (Boss.instance)
                 {
 
@@ -168,7 +178,14 @@ namespace DrawSpell
         }
         private void Win()
         {
-            StartCoroutine(BossDiedRoutine());
+            if (Boss.instance)
+            {
+                StartCoroutine(BossDiedRoutine());
+            }
+            else 
+            {
+                _isWalking = true;
+            }
             _isWin = true;
             LevelPassed?.Invoke();
         }

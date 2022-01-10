@@ -2,115 +2,127 @@ using FriendsGamesTools;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace DrawSpell
 {
+    public class SpawnSettings: MonoBehaviour
+    {
+
+    }
 
     public class EnemySpawner : MonoBehaviourHasInstance<EnemySpawner>
     {
-        [SerializeField] private Enemy[] enemies;
-        [SerializeField] private Player player;
-        [SerializeField] private EnemyTrigger triggerPrefab;
-        [SerializeField] private List<EnemyTrigger> triggers;
-        [SerializeField] private List<Enemy> spawnedEnemies = new List<Enemy>();
-        public List<Enemy> SpawnedEnemies => spawnedEnemies;
+        [SerializeField] private Transform m_targetTransform;
+        [SerializeField] private List<EnemyType> m_allowedEnemies;
+        [SerializeField] private EnemyTrigger m_triggerPrefab;
+        [SerializeField] private List<EnemyTrigger> m_triggers;
+        [SerializeField] private List<Enemy> m_spawnedEnemies = new List<Enemy>();
 
-
+        public List<EnemyTrigger> EnemyTriggers => m_triggers;
+        public EnemyTrigger LastTrigger=>EnemyTriggers[EnemyTriggers.Count-1];
+        public List<Enemy> SpawnedEnemies => m_spawnedEnemies;
         private List<Enemy> list;
-        private int randomEnemy;
-        [SerializeField]
-        private int spawnDistance = 60;
-        private float spawnDelay => DrawSpellGeneralConfig.instance.spawnDelay;
+
+        public int spawnDistance = 60;
         private float minOffset = -1.6f;
         private float maxOffset = 1.6f;
 
         [SerializeField]
-        private float _spawnInterval = 10;
+        private float m_spawnInterval = 10;
         [SerializeField]
-        private float _spawnIntervalDeviation = 4;
+        private float m_spawnIntervalDeviation = 4;
         [SerializeField]
-        private float _enemiesCount = 10;
+        private int m_enemiesCount = 10;
 
+        public int EnemiesSpawnedCount { private set; get; } = 0;
+        public int EnemiesKilled { private set; get; } = 0;
         public event Action<Enemy> EnemySpawned;
-        public void OnPlay()
-        {
-          //  StartCoroutine(SpawnEnemy());
-          
-        }
-
+        public event Action<Enemy> EnemyKilled;
+        public bool AllEnemiesKilled => EnemiesKilled == m_enemiesCount;
         private void Start()
         {
-            foreach (var tr in triggers)
+            foreach (var tr in m_triggers)
             {
                 tr.Triggered += Tr_Triggered;
             }
         }
 
-        [ContextMenu("Spawn Enemy Triggers")]
-        public void SpawnTriggers()
+        public Vector3 GetLastTriggerPosition() => EnemyTriggers[EnemyTriggers.Count - 1].transform.position;
+        public void SpawnTriggers(out Vector3 lastSpawnPoint)
         {
             
-            foreach (var tr in triggers)
+            foreach (var tr in m_triggers)
             {
                 DestroyImmediate(tr.gameObject);
             }
-            triggers.Clear();
+            m_triggers.Clear();
 
-            float _lastPosition=-30;
-
-            for (int i = 0; i < _enemiesCount; i++)
+            float _lastPosition=-25;
+            
+            EnemyTrigger trigger=null;
+            for (int i = 0; i < m_enemiesCount; i++)
             {
-                var trigger = PrefabUtils.InstantiatePrefab<EnemyTrigger>(triggerPrefab, transform);
-                trigger.transform.position = new Vector3(0, transform.position.y, transform.position.z + _lastPosition);
-                _lastPosition += _spawnInterval + Utils.Random(-_spawnIntervalDeviation, _spawnIntervalDeviation);
-                triggers.Add(trigger);
+                trigger = PrefabUtils.InstantiatePrefab<EnemyTrigger>(m_triggerPrefab, m_targetTransform);
+                trigger.transform.position = new Vector3(0, m_targetTransform.position.y, m_targetTransform.position.z + _lastPosition);
+                _lastPosition += m_spawnInterval + Utils.Random(-m_spawnIntervalDeviation, m_spawnIntervalDeviation);
+                trigger.SetType(Utils.RandomElement(m_allowedEnemies));
+                m_triggers.Add(trigger);
             }
-
+            lastSpawnPoint = trigger.transform.position+Vector3.forward*spawnDistance;
             PrefabUtils.SetPrefabDirty();
         }
         private void Tr_Triggered(EnemyTrigger trigger)
         {
-            SpawnEnemy(new Vector3(transform.position.x + UnityEngine.Random.Range(minOffset, maxOffset), transform.position.y, trigger.transform.position.z + spawnDistance));
+            var position = new Vector3(m_targetTransform.position.x + UnityEngine.Random.Range(minOffset, maxOffset),
+                m_targetTransform.position.y,
+                trigger.transform.position.z + spawnDistance);
+
+            SpawnEnemy(position, trigger.Type);
         }
 
-        private void SpawnEnemy(Vector3 position)
+        private void SpawnEnemy(Vector3 position, EnemyType type)
         {
-                randomEnemy = UnityEngine.Random.Range(0, enemies.Length);
-                var enemy=SpawnEnemyFromPool(position);
+            var enemy=SpawnEnemyFromPool(position, type);
             EnemySpawned?.Invoke(enemy);
-          
+            EnemiesSpawnedCount++;
+
         }
 
-        private void Enemy_Died(IDamageable damageable)
-        {
-            spawnedEnemies.Remove(damageable as Enemy);
-        }
-
-        public Enemy SpawnEnemyFromPool(Vector3 position)
+        public Enemy SpawnEnemyFromPool(Vector3 position, EnemyType type)
         {
             if (list == null) list = new List<Enemy>();
 
-            var pooledEnemy = list.Find(x => x != null && !x.gameObject.activeSelf && x.EnemyType == enemies[randomEnemy].EnemyType);
+            if (type == EnemyType.None)
+            {
+                type=Utils.RandomElement(m_allowedEnemies.Where(x => x != EnemyType.None).ToList());
+            }
+
+            if (type == EnemyType.None) return null ;
+
+            var enemyInfo = GameSettings.instance.GetEnemyInfo(type);
+            var pooledEnemy = list.Find(x => x != null && !x.gameObject.activeSelf && x.EnemyType == type);
             if (!pooledEnemy)
             {
-                pooledEnemy = Instantiate(enemies[randomEnemy], position, Quaternion.identity, gameObject.transform);
-                pooledEnemy.Player = player;
+                pooledEnemy = Instantiate(enemyInfo.prefab, position, Quaternion.identity, m_targetTransform);
                 list.Add(pooledEnemy);
+                pooledEnemy.Died += PooledEnemy_Killed;
             }
             pooledEnemy.transform.position = position;
             pooledEnemy.GenerateShapes();
             pooledEnemy.gameObject.SetActive(true);
-            spawnedEnemies.Add(pooledEnemy);
-            pooledEnemy.Died += PooledEnemy_Killed;
-            //player.Enemies.Add(pooledEnemy);
+            m_spawnedEnemies.Add(pooledEnemy);
+   
 
             return pooledEnemy;
         }
 
         private void PooledEnemy_Killed(IDamageable obj)
         {
-            spawnedEnemies.Remove(obj as Enemy);
+            m_spawnedEnemies.Remove(obj as Enemy);
+            EnemiesKilled++;
+            EnemyKilled?.Invoke(obj as Enemy);
         }
     }
 }

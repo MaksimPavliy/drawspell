@@ -65,6 +65,7 @@ namespace DrawSpell
     {
         public EnemyType type;
         public List<ShapeType> shapesToKill;
+        public Enemy prefab;
     }
     public class GameSettings : SettingsScriptable<GameSettings>
     {
@@ -73,5 +74,7 @@ namespace DrawSpell
 
         public EnemyInfo GetEnemyInfo(EnemyType type) => enemies.Find(x => x.type == type);
         public ShapesInfo GetShapeInfo(ShapeType type) => shapes.Find(x => x.type == type);
+
+        
     }
 }

@@ -17,8 +17,6 @@ namespace DrawSpell
         private CharacterController enemyController;
         private Player player;
         private float moveForward = 1;
-        private float attackAnimationDistance = 5f;
-
         public EnemyType EnemyType => enemyType;
         public Player Player { set => player = value; }
 
@@ -31,7 +29,6 @@ namespace DrawSpell
         public event OnDamage OnPlayerAttacked;
         public event OnDied Died;
         public event OnDamage SpellCasted;
-
         private void Start()
         {
             enemyController = GetComponent<CharacterController>();
@@ -45,16 +42,22 @@ namespace DrawSpell
 
                 enemyController.Move(new Vector3(0, 0, -moveForward * runspeed) * Time.deltaTime);
 
-                if (Vector3.Distance(player.transform.position, transform.position) < attackAnimationDistance)
-                {
-                    EffectsManager.instance.playSlashEffect(player.transform.position + Vector3.up * 1.5f);
-                    player.TakeDamage(damageToPlayer);
-                    gameObject.SetActive(false);
-                }
+                //if (Vector3.Distance(player.transform.position, transform.position) < attackAnimationDistance)
+                //{
+                  
+                //}
             }
         }
 
-
+        private void OnControllerColliderHit(ControllerColliderHit hit)
+        {
+            if (hit.collider.CompareTag("Player"))
+            {
+                EffectsManager.instance.playSlashEffect(hit.transform.position + Vector3.up * 1.5f);
+                hit.collider.GetComponent<Player>().TakeDamage(damageToPlayer);
+                gameObject.SetActive(false);
+            }
+        }
         public void TakeDamage(ShapeType shapeType)
         {
             hpShapes.DisposeShape(shapeType);
@@ -85,10 +88,12 @@ namespace DrawSpell
 
     public enum EnemyType
     {
+        None,
         Pumpkin,
         Spirit,
         Spider,
         Skeleton,
-        Bat
+        Bat,
+        Skull
     }
 }

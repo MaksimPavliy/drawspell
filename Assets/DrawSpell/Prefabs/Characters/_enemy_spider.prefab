@@ -104,7 +104,7 @@ PrefabInstance:
     - target: {fileID: 4083987138564853121, guid: 61aadd97e11fd104f946cf5339dbd893,
         type: 3}
       propertyPath: enemyType
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4908171061767823076, guid: 61aadd97e11fd104f946cf5339dbd893,
         type: 3}

@@ -6,6 +6,10 @@ namespace DrawSpell
     public class EnemyTrigger: MonoBehaviour
     {
         public event Action<EnemyTrigger> Triggered;
+        [SerializeField] private EnemyType m_type;
+
+        public EnemyType Type => m_type;
+        public void SetType(EnemyType type) => m_type = type;
 
         private void OnTriggerEnter(Collider other)
         {

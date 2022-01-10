@@ -18,14 +18,14 @@ namespace HcUtils
         protected override void Awake()
         {
             base.Awake();
-            startPosition = target.position;
+            startPosition = target.localPosition;
         }
         protected override void OnProgress(float progress)
         {
             var finalProgress = easeOut? Mathf.Sin(progress * Mathf.PI * 0.5f):progress;
             var value = Mathf.PingPong(finalProgress, 1f) * jiggle;
 
-            target.position = startPosition + value;
+            target.localPosition = startPosition + value;
         }
 
     }

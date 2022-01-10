@@ -53,6 +53,9 @@ namespace DigitalRubyShared
 
         private void LateUpdate()
         {
+
+            FingersScript.Instance.Gestures[0].StateUpdated += DemoScriptImage_StateUpdated;
+
             if (FingersScript.Instance.IsKeyDownThisFrame(KeyCode.Escape))
             {
                 ImageScript.Reset();
@@ -74,6 +77,14 @@ namespace DigitalRubyShared
                 // TODO: Do something with the match
                 // You could get a texture from it:
                 // Texture2D texture = FingersImageAutomationScript.CreateTextureFromImageGestureImage(match);
+            }
+        }
+
+        private void DemoScriptImage_StateUpdated(GestureRecognizer gesture)
+        {
+            if(gesture.State== GestureRecognizerState.Ended)
+            {
+                Debug.Log($"Ended {gesture}");
             }
         }
     }

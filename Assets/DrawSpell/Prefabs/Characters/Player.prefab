@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 5451018268916879653}
   m_Layer: 0
   m_Name: player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -148,6 +148,8 @@ MonoBehaviour:
   runspeed: 4
   playerWand: {fileID: 7327942508583722512}
   _shapeDetectors: {fileID: 0}
+  hpView: {fileID: 0}
+  animator: {fileID: 0}
 --- !u!1 &7144449469830046459
 GameObject:
   m_ObjectHideFlags: 0
