@@ -8,9 +8,12 @@ namespace DrawSpell
     {
         private List<Shape> _shapes = new List<Shape>();
         public List<Shape> Shapes => _shapes;
+        
+        [SerializeField] private Transform m_shapesParent;
 
         private float _shapeDistance = 1.5f;
 
+        public Shape FirstShape => Shapes[0];
         public void ClearShapes()
         {
             foreach (var shape in Shapes)
@@ -22,7 +25,7 @@ namespace DrawSpell
         public void CreateShape(ShapeType shapeType)
         {
             var shapeInfo = GameSettings.instance.GetShapeInfo(shapeType);
-            var shape = Instantiate(shapeInfo.shape, transform);
+            var shape = Instantiate(shapeInfo.shape, m_shapesParent);
             shape.transform.position = transform.position;
             _shapes.Add(shape);
             UpdateShapesView();
@@ -43,10 +46,10 @@ namespace DrawSpell
         }
         public void UpdateShapesView()
         {
-            Vector3 offset =Vector3.left* (Shapes.Count / 2f*_shapeDistance-_shapeDistance/2f);
             for (int i = 0; i < Shapes.Count; i++)
             {
-                Shapes[i].transform.localPosition = offset + Vector3.right * _shapeDistance*i;
+                bool active = i == 0;
+                if (active) Shapes[i].Animate();
             }
            
         }

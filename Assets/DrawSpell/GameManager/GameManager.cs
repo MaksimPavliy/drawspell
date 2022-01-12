@@ -8,7 +8,6 @@ namespace DrawSpell
     public class GameManager : MonoBehaviourHasInstance<GameManager>
     {
         [SerializeField] private Player player;
-        [SerializeField] private GameObject lean;
         [SerializeField] private Transform m_levelPath;
         [SerializeField] private GameObject portal;
         private EnemySpawner _spawner;
@@ -37,9 +36,11 @@ namespace DrawSpell
         {
             if (EnemySpawner.AllEnemiesKilled)
             {
+                player.SpeedUp();
                 if (!HasBoss)
                 {
                     portal.transform.position = player.transform.position + Vector3.forward * 6f;
+                    
                     portal.gameObject.SetActive(true);
 
                 }
@@ -53,6 +54,11 @@ namespace DrawSpell
             EnemySpawner.SpawnTriggers(out Vector3 lastSpawn);
             m_levelPath.transform.position = Vector3.forward * (lastSpawn.z);
             portal.transform.position = m_levelPath.transform.position + Vector3.up * 5f;
+            var boss = GetComponentInChildren<Boss>();
+            if (boss)
+            {
+                boss.SetShapes(EnemySpawner.AllowedShapes);
+            }
         }
         private void LevelPassed()
         {
@@ -61,30 +67,23 @@ namespace DrawSpell
 
         public void OnPlay()
         {
-            lean.SetActive(true);
+            //lean.SetActive(true);
             IsPlaying = true;
             player.OnPlay();
         }
 
         public void DoWin()
         {
-            RemoveLineRenderers();
-            lean.SetActive(false);
             GameRoot.instance.Get<WinnableLocationsController>().DoWin();
             IsPlaying = false;
         }
 
         public void DoLose()
         {
-            RemoveLineRenderers();
-            lean.SetActive(false);
             GameRoot.instance.Get<WinnableLocationsController>().DoLose();
             IsPlaying = false;
         }
 
-        private void RemoveLineRenderers()
-        {
-            FindObjectsOfType<LineRenderer>().ForEach(lineRenderer => Destroy(lineRenderer.gameObject));
-        }
+
     }
 }

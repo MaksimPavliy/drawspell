@@ -17,30 +17,32 @@ MonoBehaviour:
     shapesToKill: 00
     prefab: {fileID: 5544297011985149961, guid: 1dc68d29a729ead438eed414d9bc3cd1,
       type: 3}
+    hp: 3
   - type: 1
     shapesToKill: 0303
     prefab: {fileID: 5544297011985149961, guid: b290d3cec45db7c4082ccae4b218074e,
       type: 3}
+    hp: 1
   - type: 4
     shapesToKill: 0204
     prefab: {fileID: 5544297011985149961, guid: 04e7326982dc2614abeb8ce1c13f96e4,
       type: 3}
+    hp: 2
   - type: 3
     shapesToKill: 0103
     prefab: {fileID: 5544297011985149961, guid: 7f864533856b5db45b15e6ba0604c620,
       type: 3}
+    hp: 2
   - type: 2
     shapesToKill: 0001
     prefab: {fileID: 5544297011985149961, guid: 7c2f9f89cae86d5478d3909cb5b0faa2,
       type: 3}
-  - type: 2
-    shapesToKill: 0001
-    prefab: {fileID: 5544297011985149961, guid: 7c2f9f89cae86d5478d3909cb5b0faa2,
-      type: 3}
+    hp: 3
   - type: 6
     shapesToKill: 05070608
     prefab: {fileID: 5544297011985149961, guid: 2151ecd77f4443b4997a98e8ea116e9d,
       type: 3}
+    hp: 3
   shapes:
   - type: 0
     shape: {fileID: 3530814023973063086, guid: 58f4cb8891281b54aaede8d56a5bad3e, type: 3}

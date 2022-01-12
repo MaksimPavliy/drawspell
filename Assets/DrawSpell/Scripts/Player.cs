@@ -48,23 +48,18 @@ namespace DrawSpell
 
             EnemySpawner.instance.EnemySpawned += Instance_EnemySpawned;
 
-            var shapeDetectors = _shapeDetectors.GetComponentsInChildren<LeanShapeDetector>();
-            for (int i = 0; i < shapeDetectors.Length; i++)
-            {
-                var detector = shapeDetectors[i];
-              //  detector.OnDetected.AddListener((LeanFinger finger) => Attack(detector));
-            }
             hpView.InitHP(HP);
 
             ShapeRecognizer.instance.ShapeRecognized += OnShapeRecognized;
 
             }
 
-        private void OnShapeRecognized(Shape.ShapeType shapeType)
+        private void OnShapeRecognized(Shape.ShapeType shapeType, LineRenderer line)
         {
-            Attack(shapeType);
+            Attack(shapeType, line);
         }
 
+        public void SpeedUp() => runspeed *= 2;
         private void Instance_EnemySpawned(Enemy obj)
         {
             _spellTargets.Add(obj);
@@ -91,39 +86,56 @@ namespace DrawSpell
         }
 
 
-        public void Attack(Shape.ShapeType shapeType)
+        public void Attack(Shape.ShapeType shapeType, LineRenderer line)
         {
             animator.SetTrigger("Attack");
-            StartCoroutine(CastRoutine(shapeType));
+            StartCoroutine(CastRoutine(shapeType,line));
          
         }
-        private IEnumerator CastRoutine(Shape.ShapeType shapeType)
+        private IEnumerator CastRoutine(Shape.ShapeType shapeType, LineRenderer line)
         {
-            Debug.Log("Cast");
-            yield return new WaitForSeconds(0.4f);
 
+            yield return new WaitForSeconds(0.4f);
+            int spellsCount = 0;
             foreach (var target in _spellTargets)
             {
-                foreach (var shape in target.Shapes.Shapes)
+                var shape = target.Shapes.FirstShape;
+
+                if (shape.Type == shapeType)
                 {
-                    if (shape.IsEnabled && shape.Type == shapeType)
-                    {
-                        shape.EnableShape(false);
+                    shape.EnableShape(false);
 
-                        var spellInfo = GameSettings.instance.GetShapeInfo(shape.Type);
+                    var spellInfo = GameSettings.instance.GetShapeInfo(shape.Type);
 
-                        bool isTargetSpell = spellInfo.spell is TargetSpell;
+                    bool isTargetSpell = spellInfo.spell is TargetSpell;
 
-                        spellInfo.CastSpellInstance(isTargetSpell ? playerWand.position : (target as IDamageable).Transform.position, target);
-                        Debug.Log(shapeType);
-                        break;
-                    }
+                    spellInfo.CastSpellInstance(isTargetSpell ? playerWand.position : (target as IDamageable).Transform.position, target);
+                    spellsCount++;
                 }
+                
+                //foreach (var shape in target.Shapes.Shapes)
+                //{
+                //    if (shape.IsEnabled && shape.Type == shapeType)
+                //    {
+                //        shape.EnableShape(false);
+
+                //        var spellInfo = GameSettings.instance.GetShapeInfo(shape.Type);
+
+                //        bool isTargetSpell = spellInfo.spell is TargetSpell;
+
+                //        spellInfo.CastSpellInstance(isTargetSpell ? playerWand.position : (target as IDamageable).Transform.position, target);
+                //        Debug.Log(shapeType);
+                //        break;
+                //    }
+                //}
             }
-        }
-        public void Attack(LeanShapeDetector detector)
-        {
-            Attack(detector.Shape.GetComponent<Shape>().Type);
+
+              ShapeRecognizer.instance.ClaimLineRendererAsCorrect(line, spellsCount>0);
+            if (spellsCount > 1)
+            {
+                CinemachineCameraShake.instance.Shake();
+            }
+
         }
 
         public void TakeDamage(int damageTaken)
@@ -137,6 +149,7 @@ namespace DrawSpell
                 Died?.Invoke(this);
                 GameManager.instance.DoLose();
                 animator.SetTrigger("Die");
+                _isWalking = false;
             }
         }
 
@@ -185,6 +198,7 @@ namespace DrawSpell
             else 
             {
                 _isWalking = true;
+           
             }
             _isWin = true;
             LevelPassed?.Invoke();

@@ -9675,7 +9675,7 @@ MonoBehaviour:
   clearBehavior: 1
   cameraShake:
     enabled: 0
-    useMainCamera: 1
+    useMainCamera: 0
     cameras: []
     delay: 0
     duration: 1

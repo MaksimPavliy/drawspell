@@ -24,8 +24,9 @@ namespace DrawSpell
         [SerializeField] private Transform _spellOrigin;
         [SerializeField] private Animator animator;
         [SerializeField] private List<Shape.ShapeType> allowedShapes;
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             animator.SetFloat("AttackSpeed", m_attackSpeed);
         }
         public void TakeDamage(Shape.ShapeType shapeType)
@@ -50,6 +51,10 @@ namespace DrawSpell
         {
             InitShapes();
             StartCoroutine(ThinkingRoutine());
+        }
+        public void SetShapes(List<Shape.ShapeType> shapes)
+        {
+            allowedShapes = shapes;
         }
         private void InitShapes()
         {

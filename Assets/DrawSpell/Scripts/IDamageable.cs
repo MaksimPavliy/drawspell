@@ -19,5 +19,6 @@ namespace DrawSpell
         event OnDamage SpellCasted;
         public SpellShapes Shapes { get; }
         void TakeDamage(ShapeType shapeType);
+
     }
 }

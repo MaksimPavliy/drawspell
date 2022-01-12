@@ -1292,6 +1292,7 @@ MonoBehaviour:
   - {fileID: 472204074}
   - {fileID: 683690156}
   MatchText: {fileID: 796432440}
+  camera: {fileID: 1173167804}
   LineAnimationDurationSeconds: 0.001
 --- !u!114 &1173167807
 MonoBehaviour:

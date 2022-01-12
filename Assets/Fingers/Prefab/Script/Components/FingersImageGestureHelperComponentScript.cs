@@ -37,6 +37,7 @@ namespace DigitalRubyShared
         [Tooltip("Executed whenever lines are cleared.")]
         public System.EventHandler LinesCleared;
 
+        [SerializeField] private new Camera camera;
         /// <summary>Line animation duration in seconds</summary>
         [Tooltip("Line animation duration in seconds")]
         [Range(0.0f, 1.0f)]
@@ -69,7 +70,7 @@ namespace DigitalRubyShared
             if (idx >= 0 && idx < LineRenderers.Length)
             {
                 Vector3 worldPos = new Vector3(Gesture.FocusX, Gesture.FocusY, 0.0f);
-                worldPos = Camera.main.ScreenToWorldPoint(worldPos);
+                worldPos = camera.ScreenToWorldPoint(worldPos);
                 worldPos.z = 0.0f;
                 LineRenderers[idx].positionCount++;
                 LineRenderers[idx].SetPosition(LineRenderers[idx].positionCount - 1, worldPos);

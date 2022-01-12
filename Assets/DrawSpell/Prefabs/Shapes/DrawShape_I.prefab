@@ -11,6 +11,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DrawShape_I
       objectReference: {fileID: 0}
+    - target: {fileID: 576594120753778154, guid: fcc8e3db5422c79448a78bc467e54cf4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1372942640642647896, guid: fcc8e3db5422c79448a78bc467e54cf4,
         type: 3}
       propertyPath: points.Array.size
@@ -174,6 +179,11 @@ PrefabInstance:
     - target: {fileID: 6167076956617211460, guid: fcc8e3db5422c79448a78bc467e54cf4,
         type: 3}
       propertyPath: type
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6167076956617211460, guid: fcc8e3db5422c79448a78bc467e54cf4,
+        type: 3}
+      propertyPath: m_type
       value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []

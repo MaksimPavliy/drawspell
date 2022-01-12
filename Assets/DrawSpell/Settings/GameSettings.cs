@@ -66,6 +66,7 @@ namespace DrawSpell
         public EnemyType type;
         public List<ShapeType> shapesToKill;
         public Enemy prefab;
+        public int hp = 1;
     }
     public class GameSettings : SettingsScriptable<GameSettings>
     {

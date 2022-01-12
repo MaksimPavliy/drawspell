@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace DrawSpell
@@ -7,7 +8,15 @@ namespace DrawSpell
     {
         public event Action<EnemyTrigger> Triggered;
         [SerializeField] private EnemyType m_type;
+        [SerializeField] private List<Shape.ShapeType> m_shapes;
 
+        public List<Shape.ShapeType> Shapes => m_shapes;
+        public void SetShapes(List<Shape.ShapeType> shapes)
+        {
+            m_shapes = shapes;
+        }
+
+        
         public EnemyType Type => m_type;
         public void SetType(EnemyType type) => m_type = type;
 

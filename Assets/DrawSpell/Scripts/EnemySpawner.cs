@@ -15,11 +15,14 @@ namespace DrawSpell
     public class EnemySpawner : MonoBehaviourHasInstance<EnemySpawner>
     {
         [SerializeField] private Transform m_targetTransform;
+        [SerializeField] private List<Shape.ShapeType> m_allowedShapes;
         [SerializeField] private List<EnemyType> m_allowedEnemies;
         [SerializeField] private EnemyTrigger m_triggerPrefab;
         [SerializeField] private List<EnemyTrigger> m_triggers;
         [SerializeField] private List<Enemy> m_spawnedEnemies = new List<Enemy>();
-
+        [SerializeField] private Player player;
+        [SerializeField] private float playerOffset = 10;
+        public List<Shape.ShapeType> AllowedShapes=>m_allowedShapes;
         public List<EnemyTrigger> EnemyTriggers => m_triggers;
         public EnemyTrigger LastTrigger=>EnemyTriggers[EnemyTriggers.Count-1];
         public List<Enemy> SpawnedEnemies => m_spawnedEnemies;
@@ -59,7 +62,7 @@ namespace DrawSpell
             }
             m_triggers.Clear();
 
-            float _lastPosition=-25;
+            float _lastPosition= player.transform.position.z+playerOffset;
             
             EnemyTrigger trigger=null;
             for (int i = 0; i < m_enemiesCount; i++)
@@ -67,30 +70,41 @@ namespace DrawSpell
                 trigger = PrefabUtils.InstantiatePrefab<EnemyTrigger>(m_triggerPrefab, m_targetTransform);
                 trigger.transform.position = new Vector3(0, m_targetTransform.position.y, m_targetTransform.position.z + _lastPosition);
                 _lastPosition += m_spawnInterval + Utils.Random(-m_spawnIntervalDeviation, m_spawnIntervalDeviation);
-                trigger.SetType(Utils.RandomElement(m_allowedEnemies));
+                var enemyType = Utils.RandomElement(m_allowedEnemies);
+                trigger.SetType(enemyType);
+                var shapes = new List<Shape.ShapeType>();
+
+                for (int j = 0; j < GameSettings.instance.GetEnemyInfo(enemyType).hp; j++)
+                {
+                    shapes.Add(Utils.RandomElement(m_allowedShapes));
+                }
+                trigger.SetShapes(shapes);
+
                 m_triggers.Add(trigger);
+                
             }
             lastSpawnPoint = trigger.transform.position+Vector3.forward*spawnDistance;
             PrefabUtils.SetPrefabDirty();
         }
         private void Tr_Triggered(EnemyTrigger trigger)
         {
-            var position = new Vector3(m_targetTransform.position.x + UnityEngine.Random.Range(minOffset, maxOffset),
+            //m_targetTransform.position.x + UnityEngine.Random.Range(minOffset, maxOffset)
+            var position = new Vector3(m_targetTransform.position.x + EnemiesSpawnedCount % 2==0?minOffset:maxOffset,
                 m_targetTransform.position.y,
                 trigger.transform.position.z + spawnDistance);
 
-            SpawnEnemy(position, trigger.Type);
+            SpawnEnemy(position, trigger.Type, trigger.Shapes);
         }
 
-        private void SpawnEnemy(Vector3 position, EnemyType type)
+        private void SpawnEnemy(Vector3 position, EnemyType type, List<Shape.ShapeType> shapes)
         {
-            var enemy=SpawnEnemyFromPool(position, type);
+            var enemy=SpawnEnemyFromPool(position, type, shapes);
             EnemySpawned?.Invoke(enemy);
             EnemiesSpawnedCount++;
 
         }
 
-        public Enemy SpawnEnemyFromPool(Vector3 position, EnemyType type)
+        public Enemy SpawnEnemyFromPool(Vector3 position, EnemyType type, List<Shape.ShapeType> shapes)
         {
             if (list == null) list = new List<Enemy>();
 
@@ -110,7 +124,7 @@ namespace DrawSpell
                 pooledEnemy.Died += PooledEnemy_Killed;
             }
             pooledEnemy.transform.position = position;
-            pooledEnemy.GenerateShapes();
+            pooledEnemy.GenerateShapes(shapes);
             pooledEnemy.gameObject.SetActive(true);
             m_spawnedEnemies.Add(pooledEnemy);
    

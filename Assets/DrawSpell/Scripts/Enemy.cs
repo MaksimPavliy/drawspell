@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using static Shape;
 
@@ -9,7 +10,7 @@ namespace DrawSpell
         private DrawSpellGeneralConfig config => DrawSpellGeneralConfig.instance;
 
         int LocationIndex => DrawSpellRoot.instance.levels.currLocationInd;
-        [SerializeField] private float runspeed => GameManager.instance.EnemiesSpeed+ (LocationIndex+1)*0.1f;
+        [SerializeField] private float runspeed => GameManager.instance.EnemiesSpeed*DrawSpellGeneralConfig.instance.speedEnemy+ (LocationIndex+1)*0.1f;
         [SerializeField] private SpellShapes hpShapes;
         [SerializeField] private int damageToPlayer = 1;
         [SerializeField] private EnemyType enemyType;
@@ -64,13 +65,14 @@ namespace DrawSpell
             TakeDamage(1);
         }
 
-        public void GenerateShapes()
+        public void GenerateShapes(List<Shape.ShapeType> shapes)
         {
             var enemyInfo = GameSettings.instance.GetEnemyInfo(enemyType);
             if (enemyInfo==null) return;
 
             hpShapes.ClearShapes();
-            foreach (var shape in enemyInfo.shapesToKill)
+
+            foreach (var shape in shapes)
             {
                 hpShapes.CreateShape(shape);
             }
