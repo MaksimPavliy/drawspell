@@ -207,6 +207,16 @@ PrefabInstance:
       propertyPath: _spellOrigin
       value: 
       objectReference: {fileID: 8191022824701857116}
+    - target: {fileID: 7478651706919111962, guid: ae3c32afaf4e130429a40b1d49df1016,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040268022418673691, guid: ae3c32afaf4e130429a40b1d49df1016,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae3c32afaf4e130429a40b1d49df1016, type: 3}
 --- !u!4 &5293168263564588216 stripped

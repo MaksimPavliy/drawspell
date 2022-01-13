@@ -63,7 +63,7 @@ namespace DrawSpell
             {
                 ImageGestureImage image = recognizer.CheckForImageMatch();
                 var lineClone = GetClone();
-
+                recognizer.ClearLineRenderers();
                 if (image != null)
                 {
                     var key = recognizer.GestureImagesToKey[image];
@@ -81,9 +81,27 @@ namespace DrawSpell
                         case "DiagonalLine2":
                             ShapeRecognized?.Invoke(Shape.ShapeType.Shape_CounterSlash, lineClone);
                             break;
+                        case "Triangle":
+                            ShapeRecognized?.Invoke(Shape.ShapeType.Shape_Triangle, lineClone);
+                            break;
+                        case "Circle":
+                            ShapeRecognized?.Invoke(Shape.ShapeType.Shape_O, lineClone);
+                            break;
+                        case "LightningBolt":
+                            ShapeRecognized?.Invoke(Shape.ShapeType.Shape_Lightning, lineClone);
+                            break;
+                        case "LetterV":
+                            ShapeRecognized?.Invoke(Shape.ShapeType.Shape_V, lineClone);
+                            break;
+
                         default:
+                            ClaimLineRendererAsCorrect(lineClone, false);
                             break;
                     }
+                }
+                else
+                {
+                    ClaimLineRendererAsCorrect(lineClone, false);
                 }
                 gesture.Reset();
 

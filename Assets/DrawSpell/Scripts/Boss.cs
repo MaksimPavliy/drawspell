@@ -19,7 +19,8 @@ namespace DrawSpell
         [SerializeField]
         private int strength = 5;
 
-        [SerializeField] private float m_attackSpeed = 1;
+        [SerializeField] private float m_attackAnimationSpeed = 1;
+        [SerializeField] private float m_attacksInterval = 2f;
 
         [SerializeField] private Transform _spellOrigin;
         [SerializeField] private Animator animator;
@@ -27,7 +28,7 @@ namespace DrawSpell
         protected override void Awake()
         {
             base.Awake();
-            animator.SetFloat("AttackSpeed", m_attackSpeed);
+            animator.SetFloat("AttackSpeed", m_attackAnimationSpeed);
         }
         public void TakeDamage(Shape.ShapeType shapeType)
         {
@@ -77,7 +78,7 @@ namespace DrawSpell
             while (_spellTarget != null)
             {
                 animator.SetTrigger("Prepare");
-                yield return new WaitForSeconds(2f);
+                yield return new WaitForSeconds(m_attacksInterval);
                 animator.SetTrigger("Attack");
                 yield return new WaitForSeconds(0.5f);
                 if (_spellTarget == null) break;
@@ -108,6 +109,8 @@ namespace DrawSpell
                 //  gameObject.SetActive(false);
                 animator.SetTrigger("Die");
                 StopAllCoroutines();
+                GetComponent<CharacterController>().enabled = false;
+                Shapes.gameObject.SetActive(false);
             }
         }
     }

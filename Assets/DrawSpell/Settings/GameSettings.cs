@@ -64,7 +64,6 @@ namespace DrawSpell
     public class EnemyInfo
     {
         public EnemyType type;
-        public List<ShapeType> shapesToKill;
         public Enemy prefab;
         public int hp = 1;
     }

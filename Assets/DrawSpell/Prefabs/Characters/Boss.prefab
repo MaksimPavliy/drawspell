@@ -96,7 +96,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shapes: {fileID: 15458707979056021}
   strength: 5
-  m_attackSpeed: 1
+  m_attackAnimationSpeed: 1
+  m_attacksInterval: 2
   _spellOrigin: {fileID: 0}
   animator: {fileID: 0}
   allowedShapes: 
@@ -120,7 +121,7 @@ PrefabInstance:
     - target: {fileID: 4127808979993438157, guid: aadc3244511e53d439b930193e59ef54,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.69
+      value: 5.2
       objectReference: {fileID: 0}
     - target: {fileID: 4127808979993438157, guid: aadc3244511e53d439b930193e59ef54,
         type: 3}

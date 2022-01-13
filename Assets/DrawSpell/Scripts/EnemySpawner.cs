@@ -29,8 +29,8 @@ namespace DrawSpell
         private List<Enemy> list;
 
         public int spawnDistance = 60;
-        private float minOffset = -1.6f;
-        private float maxOffset = 1.6f;
+        private float minOffset = -1.4f;
+        private float maxOffset = 1.4f;
 
         [SerializeField]
         private float m_spawnInterval = 10;

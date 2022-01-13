@@ -47,7 +47,7 @@ namespace DigitalRubyShared
         private ImageGestureImage matchedImage;
         private float animationTime;
 
-        private void ClearLineRenderers()
+        public void ClearLineRenderers()
         {
             foreach (LineRenderer lineRenderer in LineRenderers)
             {
@@ -56,7 +56,7 @@ namespace DigitalRubyShared
             if (LinesCleared != null)
             {
                 LinesCleared.Invoke(this, System.EventArgs.Empty);
-            }
+             }
         }
 
         private void Gesture_MaximumPathCountExceeded(object sender, System.EventArgs e)
@@ -105,6 +105,7 @@ namespace DigitalRubyShared
             if (animationTime > 0.0f)
             {
                 animationTime -= Time.deltaTime;
+                Debug.Log(animationTime);
                 if (animationTime <= 0.0f)
                 {
                     ClearLineRenderers();

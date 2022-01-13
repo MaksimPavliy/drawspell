@@ -59,7 +59,8 @@ namespace DrawSpell
             Attack(shapeType, line);
         }
 
-        public void SpeedUp() => runspeed *= 2;
+        
+        public void SpeedUp() => runspeed *= 3;
         private void Instance_EnemySpawned(Enemy obj)
         {
             _spellTargets.Add(obj);
@@ -113,24 +114,9 @@ namespace DrawSpell
                     spellsCount++;
                 }
                 
-                //foreach (var shape in target.Shapes.Shapes)
-                //{
-                //    if (shape.IsEnabled && shape.Type == shapeType)
-                //    {
-                //        shape.EnableShape(false);
-
-                //        var spellInfo = GameSettings.instance.GetShapeInfo(shape.Type);
-
-                //        bool isTargetSpell = spellInfo.spell is TargetSpell;
-
-                //        spellInfo.CastSpellInstance(isTargetSpell ? playerWand.position : (target as IDamageable).Transform.position, target);
-                //        Debug.Log(shapeType);
-                //        break;
-                //    }
-                //}
             }
 
-              ShapeRecognizer.instance.ClaimLineRendererAsCorrect(line, spellsCount>0);
+             ShapeRecognizer.instance.ClaimLineRendererAsCorrect(line, spellsCount>0);
             if (spellsCount > 1)
             {
                 CinemachineCameraShake.instance.Shake();
@@ -188,6 +174,10 @@ namespace DrawSpell
         private void OnDestroy()
         {
             transform.DOComplete();
+            if (ShapeRecognizer.instance)
+            {
+                ShapeRecognizer.instance.ShapeRecognized -= OnShapeRecognized;
+            }
         }
         private void Win()
         {

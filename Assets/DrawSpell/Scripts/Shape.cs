@@ -14,11 +14,10 @@ public class Shape : MonoBehaviour
 
     public enum ShapeType : byte
     {
-        Shape_Vigvam,
         Shape_V,
         Shape_Lightning,
-        Shape_Z,
-        Shape_L,
+        Shape_O,
+        Shape_Triangle,
         Shape_I,
         Shape_Stroke,
         Shape_Slash,
