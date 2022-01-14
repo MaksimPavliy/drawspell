@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SpellShapes
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    - serializedVersion: 3
+      m_BuildTarget: iPhone
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: 47
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 1
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: 9863e00f3399131449dfffc2fabd5b1f, type: 3}
+    - {fileID: 102900000, guid: 7d09664cff6f020418d453e9046cff31, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: c56c26513c19d3d4f89132cdc7812a82, type: 3}
+  - {fileID: 21300000, guid: 39902f815b33e904381ae279852ce88b, type: 3}
+  - {fileID: 21300000, guid: 35f236e28dfdcbc43bafbd27d26ec493, type: 3}
+  - {fileID: 21300000, guid: 222bd0654c2cd964a923213bfc907eda, type: 3}
+  - {fileID: 21300000, guid: 4d9c6f76d32219044a7844c9ad957b3e, type: 3}
+  - {fileID: 21300000, guid: 881839e8f0859684ca00899796ae358a, type: 3}
+  - {fileID: 21300000, guid: 6cfc4149165bf6547afb61d2d7086840, type: 3}
+  - {fileID: 21300000, guid: f922ca0a572d2924a80a3450cfd90c51, type: 3}
+  - {fileID: 21300000, guid: 066684ba09486e147a974e333575d28c, type: 3}
+  - {fileID: 21300000, guid: 9863e00f3399131449dfffc2fabd5b1f, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - spellShape_-
+  - spellShape_Lightning
+  - spellShape_Triangle
+  - spellShape_I
+  - spellShape_counterSlash
+  - spellShapes_bg
+  - spellShape_slash
+  - spellShape_V
+  - spellShape_O
+  - heart
+  m_RenderDataMap: {}
+  m_Tag: SpellShapes
+  m_IsVariant: 0
