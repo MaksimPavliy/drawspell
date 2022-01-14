@@ -11,15 +11,20 @@ namespace DrawSpell
         [SerializeField] private float duration = 0.3f;
         [SerializeField] private float amplitude = 1.2f;
         [SerializeField] private float frequency = 2.0f;
-        [SerializeField] private CinemachineVirtualCamera virtualCamera;
+        [SerializeField] private CinemachineVirtualCamera[] virtualCameras;
         [SerializeField] private bool enableMultiShake;
-        private CinemachineBasicMultiChannelPerlin noise;
+        private CinemachineBasicMultiChannelPerlin[] noises;
         private bool canShake = true;
 
         protected override void Awake()
         {
             base.Awake();
-            noise = virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+            noises = new CinemachineBasicMultiChannelPerlin[virtualCameras.Length];
+            for (int i = 0; i < virtualCameras.Length; i++)
+            {
+                noises[i]=virtualCameras[i].GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+            }
+         
         }
 
         public void Shake()
@@ -28,8 +33,13 @@ namespace DrawSpell
             {
                 return;
             }
-            noise.m_AmplitudeGain = amplitude;
-            noise.m_FrequencyGain = frequency;
+
+            foreach (var noise in noises)
+            {
+                noise.m_AmplitudeGain = amplitude;
+                noise.m_FrequencyGain = frequency;
+            }
+         
 
             StartCoroutine(StopShake());
         }
@@ -40,8 +50,12 @@ namespace DrawSpell
 
             yield return new WaitForSeconds(duration);
 
-            noise.m_AmplitudeGain = 0;
 
+            foreach (var noise in noises)
+            {
+                noise.m_AmplitudeGain = 0;
+            }
+         
             canShake = true;
         }
     }

@@ -1,5 +1,6 @@
 using DG.Tweening;
 using DigitalRubyShared;
+using HcUtils;
 using Lean.Touch;
 using System;
 using System.Collections;
@@ -40,6 +41,7 @@ namespace DrawSpell
 
         public event Action LevelPassed;
         private bool _isWin = false;
+        public bool Alive { private set; get; } = true;
         void Start()
         {
             runspeed = 0f;
@@ -132,15 +134,18 @@ namespace DrawSpell
 
             if (hp <= 0)
             {
+                Alive = false;
                 Died?.Invoke(this);
                 GameManager.instance.DoLose();
                 animator.SetTrigger("Die");
                 _isWalking = false;
+                StopAllCoroutines();
             }
         }
 
         private void OnTriggerEnter(Collider other)
         {
+            if (!Alive) return;
             if (other.CompareTag("Portal"))
             {
                 GameManager.instance.DoWin();
@@ -157,6 +162,9 @@ namespace DrawSpell
                 {
 
                     _spellTargets.Add(Boss.instance);
+                    
+                    CameraSwitch.instance.ActivateCamera("bossCamera");
+
                     Boss.instance.SetSpellTarget(this);
                     Boss.instance.Died += (IDamageable damageable) =>
                      {
