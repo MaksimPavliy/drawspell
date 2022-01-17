@@ -83,7 +83,7 @@ namespace DrawSpell
                 m_triggers.Add(trigger);
                 
             }
-            lastSpawnPoint = trigger.transform.position+Vector3.forward*spawnDistance;
+            lastSpawnPoint = trigger.transform.position+Vector3.forward*30f;
             PrefabUtils.SetPrefabDirty();
         }
         private void Tr_Triggered(EnemyTrigger trigger)
@@ -92,6 +92,11 @@ namespace DrawSpell
             var position = new Vector3(m_targetTransform.position.x + EnemiesSpawnedCount % 2==0?minOffset:maxOffset,
                 m_targetTransform.position.y,
                 trigger.transform.position.z + spawnDistance);
+
+            if (Boss.instance)
+            {
+                position.z = Mathf.Clamp(position.z, -100500, Boss.instance.transform.position.z);
+            }
 
             SpawnEnemy(position, trigger.Type, trigger.Shapes);
         }
