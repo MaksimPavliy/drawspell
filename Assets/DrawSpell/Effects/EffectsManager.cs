@@ -92,14 +92,20 @@ namespace DrawSpell
         private ParticleList brokenHeart;
         [SerializeField]
         private ParticleList slashEffect;
-        public void playBrokenHeart(Vector3 position)
+        [SerializeField]
+        private ParticleList enemySpawnEffect;
+        public void PlayBrokenHeart(Vector3 position)
         {
             brokenHeart.PlayEffect(position);
         }
 
-        public void playSlashEffect(Vector3 position)
+        public void PlaySlashEffect(Vector3 position)
         {
             slashEffect.PlayEffect(position);
+        }
+        public void PlayEnemySpawn(Vector3 position)
+        {
+            enemySpawnEffect.PlayEffect(position);
         }
     }
 }

@@ -129,6 +129,7 @@ namespace DrawSpell
                 pooledEnemy.Died += PooledEnemy_Killed;
             }
             pooledEnemy.transform.position = position;
+            EffectsManager.instance.PlayEnemySpawn(position+Vector3.back*1f);
             pooledEnemy.GenerateShapes(shapes);
             pooledEnemy.gameObject.SetActive(true);
             m_spawnedEnemies.Add(pooledEnemy);
