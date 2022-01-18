@@ -56,6 +56,7 @@ namespace DrawSpell
             {
                 EffectsManager.instance.PlayEnemySpawn(hit.transform.position + Vector3.up * 1.5f);
                 hit.collider.GetComponent<Player>().TakeDamage(damageToPlayer);
+                Died?.Invoke(this);
                 gameObject.SetActive(false);
             }
         }

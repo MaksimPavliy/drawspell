@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace DrawSpell
 {
-    public class SpawnSettings: MonoBehaviour
+    public class SpawnSettings : MonoBehaviour
     {
 
     }
@@ -22,9 +22,9 @@ namespace DrawSpell
         [SerializeField] private List<Enemy> m_spawnedEnemies = new List<Enemy>();
         [SerializeField] private Player player;
         [SerializeField] private float playerOffset = 10;
-        public List<Shape.ShapeType> AllowedShapes=>m_allowedShapes;
+        public List<Shape.ShapeType> AllowedShapes => m_allowedShapes;
         public List<EnemyTrigger> EnemyTriggers => m_triggers;
-        public EnemyTrigger LastTrigger=>EnemyTriggers[EnemyTriggers.Count-1];
+        public EnemyTrigger LastTrigger => EnemyTriggers[EnemyTriggers.Count - 1];
         public List<Enemy> SpawnedEnemies => m_spawnedEnemies;
         private List<Enemy> list;
 
@@ -55,16 +55,16 @@ namespace DrawSpell
         public Vector3 GetLastTriggerPosition() => EnemyTriggers[EnemyTriggers.Count - 1].transform.position;
         public void SpawnTriggers(out Vector3 lastSpawnPoint)
         {
-            
+
             foreach (var tr in m_triggers)
             {
-                DestroyImmediate(tr.gameObject);
+                if (tr != null) DestroyImmediate(tr.gameObject);
             }
             m_triggers.Clear();
 
-            float _lastPosition= player.transform.position.z+playerOffset;
-            
-            EnemyTrigger trigger=null;
+            float _lastPosition = player.transform.position.z + playerOffset;
+
+            EnemyTrigger trigger = null;
             for (int i = 0; i < m_enemiesCount; i++)
             {
                 trigger = PrefabUtils.InstantiatePrefab<EnemyTrigger>(m_triggerPrefab, m_targetTransform);
@@ -81,15 +81,15 @@ namespace DrawSpell
                 trigger.SetShapes(shapes);
 
                 m_triggers.Add(trigger);
-                
+
             }
-            lastSpawnPoint = trigger.transform.position+Vector3.forward*30f;
+            lastSpawnPoint = trigger.transform.position + Vector3.forward * 30f;
             PrefabUtils.SetPrefabDirty();
         }
         private void Tr_Triggered(EnemyTrigger trigger)
         {
             //m_targetTransform.position.x + UnityEngine.Random.Range(minOffset, maxOffset)
-            var position = new Vector3(m_targetTransform.position.x + EnemiesSpawnedCount % 2==0?minOffset:maxOffset,
+            var position = new Vector3(m_targetTransform.position.x + EnemiesSpawnedCount % 2 == 0 ? minOffset : maxOffset,
                 m_targetTransform.position.y,
                 trigger.transform.position.z + spawnDistance);
 
@@ -103,7 +103,7 @@ namespace DrawSpell
 
         private void SpawnEnemy(Vector3 position, EnemyType type, List<Shape.ShapeType> shapes)
         {
-            var enemy=SpawnEnemyFromPool(position, type, shapes);
+            var enemy = SpawnEnemyFromPool(position, type, shapes);
             EnemySpawned?.Invoke(enemy);
             EnemiesSpawnedCount++;
 
@@ -115,10 +115,10 @@ namespace DrawSpell
 
             if (type == EnemyType.None)
             {
-                type=Utils.RandomElement(m_allowedEnemies.Where(x => x != EnemyType.None).ToList());
+                type = Utils.RandomElement(m_allowedEnemies.Where(x => x != EnemyType.None).ToList());
             }
 
-            if (type == EnemyType.None) return null ;
+            if (type == EnemyType.None) return null;
 
             var enemyInfo = GameSettings.instance.GetEnemyInfo(type);
             var pooledEnemy = list.Find(x => x != null && !x.gameObject.activeSelf && x.EnemyType == type);
@@ -129,11 +129,11 @@ namespace DrawSpell
                 pooledEnemy.Died += PooledEnemy_Killed;
             }
             pooledEnemy.transform.position = position;
-            EffectsManager.instance.PlayEnemySpawn(position+Vector3.back*1f);
+            EffectsManager.instance.PlayEnemySpawn(position + Vector3.back * 1f);
             pooledEnemy.GenerateShapes(shapes);
             pooledEnemy.gameObject.SetActive(true);
             m_spawnedEnemies.Add(pooledEnemy);
-   
+
 
             return pooledEnemy;
         }
