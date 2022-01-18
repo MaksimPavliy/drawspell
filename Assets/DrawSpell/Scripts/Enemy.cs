@@ -54,7 +54,7 @@ namespace DrawSpell
         {
             if (hit.collider.CompareTag("Player"))
             {
-                EffectsManager.instance.playSlashEffect(hit.transform.position + Vector3.up * 1.5f);
+                EffectsManager.instance.PlayEnemySpawn(hit.transform.position + Vector3.up * 1.5f);
                 hit.collider.GetComponent<Player>().TakeDamage(damageToPlayer);
                 gameObject.SetActive(false);
             }

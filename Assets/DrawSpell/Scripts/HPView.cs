@@ -27,7 +27,7 @@ namespace DrawSpell
             var lastHeart = hearts[hearts.Count - 1];
             hearts.Remove(lastHeart);
             Destroy(lastHeart.gameObject);
-            EffectsManager.instance.playBrokenHeart(transform.position+Vector3.up*3);
+            EffectsManager.instance.PlayBrokenHeart(transform.position+Vector3.up*3);
         }
     }
 }
