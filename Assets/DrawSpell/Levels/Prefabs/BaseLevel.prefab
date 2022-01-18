@@ -30,7 +30,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 125852766257646264}
-  m_LocalRotation: {x: 0.122251496, y: -0.15799636, z: 0.019716635, w: 0.97964436}
+  m_LocalRotation: {x: 0.123161525, y: -0.10306145, z: 0.012861214, w: 0.98693675}
   m_LocalPosition: {x: 5.15, y: 11.83, z: -44.93}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -360,7 +360,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4134094729309009900}
-  m_LocalRotation: {x: 0.0000000074505797, y: -0.000000029802319, z: 0.0000000074505797,
+  m_LocalRotation: {x: -0.000000022351742, y: 0.000000022351742, z: -0.0000000027939677,
     w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -398,7 +398,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 0.46182266, y: 1}
+    m_SensorSize: {x: 0.8, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1392,17 +1392,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_targetTransform: {fileID: 2697014785268325230}
-  m_allowedShapes: 
-  m_allowedEnemies: 
+  m_allowedShapes: 0001020304050607
+  m_allowedEnemies: 010000000200000003000000040000000500000006000000
   m_triggerPrefab: {fileID: 4905019937115561422, guid: 832fa5d33f6a7c34dbd82a1821e6302f,
     type: 3}
   m_triggers: []
-  m_spawnedEnemies: []
+  m_spawnedEnemies:
+  - {fileID: 5544297011985149961, guid: 1dc68d29a729ead438eed414d9bc3cd1, type: 3}
+  - {fileID: 5544297011985149961, guid: b290d3cec45db7c4082ccae4b218074e, type: 3}
+  - {fileID: 5544297011985149961, guid: 04e7326982dc2614abeb8ce1c13f96e4, type: 3}
+  - {fileID: 5544297011985149961, guid: 2151ecd77f4443b4997a98e8ea116e9d, type: 3}
+  - {fileID: 5544297011985149961, guid: 7f864533856b5db45b15e6ba0604c620, type: 3}
+  - {fileID: 5544297011985149961, guid: 7c2f9f89cae86d5478d3909cb5b0faa2, type: 3}
   player: {fileID: 2829487930764324084}
-  playerOffset: 10
-  spawnDistance: 45
-  m_spawnInterval: 20
-  m_spawnIntervalDeviation: 4
+  playerOffset: 5
+  spawnDistance: 30
+  m_spawnInterval: 8
+  m_spawnIntervalDeviation: 0
   m_enemiesCount: 10
 --- !u!1 &8000049747209926314
 GameObject:
