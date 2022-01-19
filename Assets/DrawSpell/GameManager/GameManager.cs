@@ -11,6 +11,7 @@ namespace DrawSpell
         [SerializeField] private Transform m_levelPath;
         [SerializeField] private GameObject portal;
         private EnemySpawner _spawner;
+        public int CoinsCollected { set; get; }
 
         public bool HasBoss => Boss.instance != null;
 

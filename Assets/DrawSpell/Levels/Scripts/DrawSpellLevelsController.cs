@@ -7,11 +7,11 @@ namespace DrawSpell
     {
         protected override (bool win, bool lose) CheckWinLose() => (false, false);
         DrawSpellMoneyConfig moneyConfig => DrawSpellMoneyConfig.instance;
-        public override int levelWinMoney => moneyConfig.levelWinMoneyBase + currLocationInd * moneyConfig.levelWinMoneyCoef;
+        public override int levelWinMoney => moneyConfig.levelWinMoneyBase + currLocationInd * moneyConfig.levelWinMoneyCoef+GameManager.instance.CoinsCollected;
 #if ADS
         public override float levelWinX3Chance => moneyConfig.levelWinX3Chance;
 #endif
-        public override int winStarsCount => Utils.Random(0, 1f) <= 0.7f ? 3 : 2;
+        public override int winStarsCount => 3;
         public bool LastGameIsWin { private set; get; } = false;
         public override void RestartLocation()
         {

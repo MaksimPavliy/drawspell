@@ -94,6 +94,8 @@ namespace DrawSpell
         private ParticleList slashEffect;
         [SerializeField]
         private ParticleList enemySpawnEffect;
+        [SerializeField]
+        private ParticleList addCoinffect;
         public void PlayBrokenHeart(Vector3 position)
         {
             brokenHeart.PlayEffect(position);
@@ -107,5 +109,11 @@ namespace DrawSpell
         {
             enemySpawnEffect.PlayEffect(position);
         }
+
+        public void PlayAddCoin(Vector3 position)
+        {
+            addCoinffect.PlayEffect(position);
+        }
+
     }
 }

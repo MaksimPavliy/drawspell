@@ -85,6 +85,11 @@ namespace DrawSpell
             {
                 Died?.Invoke(this);
                 gameObject.SetActive(false);
+                if (Random.value > 0.7f)
+                {
+                    EffectsManager.instance.PlayAddCoin(transform.position);
+                    GameManager.instance.CoinsCollected++;
+                }
             }
         }
     }
