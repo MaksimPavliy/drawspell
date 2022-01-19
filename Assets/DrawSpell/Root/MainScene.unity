@@ -807,17 +807,17 @@ PrefabInstance:
     - target: {fileID: 5837255206974891794, guid: ca3ac65e4f96f364789e57ec56f171e1,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.0000000074505797
+      value: 0.0000000074505797
       objectReference: {fileID: 0}
     - target: {fileID: 5837255206974891794, guid: ca3ac65e4f96f364789e57ec56f171e1,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000014901159
+      value: 0.000000029802319
       objectReference: {fileID: 0}
     - target: {fileID: 5837255206974891794, guid: ca3ac65e4f96f364789e57ec56f171e1,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000037252899
+      value: -0.0000000074505797
       objectReference: {fileID: 0}
     - target: {fileID: 6303544498737551121, guid: ca3ac65e4f96f364789e57ec56f171e1,
         type: 3}
@@ -832,17 +832,17 @@ PrefabInstance:
     - target: {fileID: 6946113206976933922, guid: ca3ac65e4f96f364789e57ec56f171e1,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.12225147
+      value: 0.1222515
       objectReference: {fileID: 0}
     - target: {fileID: 6946113206976933922, guid: ca3ac65e4f96f364789e57ec56f171e1,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.15799637
+      value: -0.15799636
       objectReference: {fileID: 0}
     - target: {fileID: 6946113206976933922, guid: ca3ac65e4f96f364789e57ec56f171e1,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.019716633
+      value: 0.019716635
       objectReference: {fileID: 0}
     - target: {fileID: 7146533931447555973, guid: ca3ac65e4f96f364789e57ec56f171e1,
         type: 3}
@@ -5538,6 +5538,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7711299062076125996, guid: ab99b666fd4860e4d93950d0d02e01ee,
+        type: 3}
+      propertyPath: levelWinMoneyCoef
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab99b666fd4860e4d93950d0d02e01ee, type: 3}
