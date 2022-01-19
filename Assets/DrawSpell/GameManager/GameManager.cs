@@ -13,6 +13,8 @@ namespace DrawSpell
         private EnemySpawner _spawner;
         public int CoinsCollected { set; get; }
 
+        public int playerHPModifier = 0;
+
         public bool HasBoss => Boss.instance != null;
 
         public EnemySpawner EnemySpawner { get

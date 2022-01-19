@@ -18,6 +18,7 @@ namespace DrawSpell
         private DrawSpellGeneralConfig config => DrawSpellGeneralConfig.instance;
         private CharacterController characterController;
         private float moveForward = 1;
+
         private int hp = 5;
 
         public event OnDamage OnPlayerAttacked;
@@ -48,6 +49,8 @@ namespace DrawSpell
             characterController = GetComponent<CharacterController>();
 
             EnemySpawner.instance.EnemySpawned += Instance_EnemySpawned;
+            
+            hp =DrawSpellGeneralConfig.instance.startPlayerHP+GameManager.instance.playerHPModifier;
 
             hpView.InitHP(HP);
 
@@ -168,6 +171,10 @@ namespace DrawSpell
                     Boss.instance.Died += (IDamageable damageable) =>
                      {
                          _spellTargets.Remove(damageable as ISpellTarget);
+
+                         hp = DrawSpellGeneralConfig.instance.startPlayerHP + GameManager.instance.playerHPModifier+1;
+                         hpView.InitHP(HP);
+                         EffectsManager.instance.PlayAddHeart(transform.position + Vector3.up * 4f);
                          Win();
                      };
                 }

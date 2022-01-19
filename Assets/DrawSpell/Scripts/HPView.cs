@@ -12,6 +12,12 @@ namespace DrawSpell
         private float _distance = 0.32f;
        public void InitHP(int HP)
         {
+            foreach(var heart in hearts)
+            {
+                Destroy(heart.gameObject);
+
+            }
+            hearts.Clear();
             for (int i = 0; i < HP; i++)
             {
                 var h = Instantiate(heartPrefab, transform);

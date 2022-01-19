@@ -10,5 +10,6 @@ namespace DrawSpell
         public float spawnDelay = 1f;
         public int levelCompletionKillCount = 15;
         public bool customColorSets = true;
+        public int startPlayerHP = 2;
     }
 }
