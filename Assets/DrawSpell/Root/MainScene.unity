@@ -807,17 +807,17 @@ PrefabInstance:
     - target: {fileID: 5837255206974891794, guid: ca3ac65e4f96f364789e57ec56f171e1,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.0000000074505797
+      value: -0.000000014901161
       objectReference: {fileID: 0}
     - target: {fileID: 5837255206974891794, guid: ca3ac65e4f96f364789e57ec56f171e1,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000029802319
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5837255206974891794, guid: ca3ac65e4f96f364789e57ec56f171e1,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000074505797
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6303544498737551121, guid: ca3ac65e4f96f364789e57ec56f171e1,
         type: 3}
@@ -827,22 +827,22 @@ PrefabInstance:
     - target: {fileID: 6946113206976933922, guid: ca3ac65e4f96f364789e57ec56f171e1,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.97964436
+      value: 0.98693675
       objectReference: {fileID: 0}
     - target: {fileID: 6946113206976933922, guid: ca3ac65e4f96f364789e57ec56f171e1,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.1222515
+      value: 0.12316152
       objectReference: {fileID: 0}
     - target: {fileID: 6946113206976933922, guid: ca3ac65e4f96f364789e57ec56f171e1,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.15799636
+      value: -0.103061445
       objectReference: {fileID: 0}
     - target: {fileID: 6946113206976933922, guid: ca3ac65e4f96f364789e57ec56f171e1,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.019716635
+      value: 0.012861213
       objectReference: {fileID: 0}
     - target: {fileID: 7146533931447555973, guid: ca3ac65e4f96f364789e57ec56f171e1,
         type: 3}
@@ -2791,7 +2791,7 @@ MonoBehaviour:
       0x0000000000001C70, 0x0000000000000000 }, imageWidth, 0.05f), \"Circle\" }"
     Description: 
   - Key: LetterV
-    ScorePadding: 0
+    ScorePadding: 0.065
     Images: "{ new ImageGestureImage(new ulong[] { 0x00000000000003E0, 0x00000000000007F0,
       0x00000000000007F0, 0x0000000000000F78, 0x0000000000001F78, 0x0000000000003E3C,
       0x0000000000007C3C, 0x000000000000781E, 0x000000000000701E, 0x000000000000F00F,
@@ -5278,7 +5278,7 @@ PrefabInstance:
     - target: {fileID: 4525741836608172227, guid: 22523beb7fe24e44b99f1ca003ef662c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -80
+      value: -80.000015
       objectReference: {fileID: 0}
     - target: {fileID: 4525741836938753147, guid: 22523beb7fe24e44b99f1ca003ef662c,
         type: 3}
