@@ -1,5 +1,6 @@
 using DG.Tweening;
 using DigitalRubyShared;
+using FriendsGamesTools.ECSGame;
 using HcUtils;
 using System;
 using System.Collections;
@@ -42,6 +43,7 @@ namespace DrawSpell
         public event Action LevelPassed;
         private bool _isWin = false;
         public bool Alive { private set; get; } = true;
+        private bool CanSpell => DrawSpellRoot.instance.levels.state == Level.State.playing;
         void Start()
         {
             runspeed = 0f;
@@ -93,6 +95,7 @@ namespace DrawSpell
 
         public void Attack(Shape.ShapeType shapeType, LineRenderer line)
         {
+            if (!CanSpell) return;
             animator.SetTrigger("Attack");
             StartCoroutine(CastRoutine(shapeType,line));
          

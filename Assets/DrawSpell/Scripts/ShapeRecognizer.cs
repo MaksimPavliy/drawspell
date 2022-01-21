@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using DigitalRubyShared;
 using FriendsGamesTools;
+using FriendsGamesTools.ECSGame;
 using System;
 using UnityEngine;
 
@@ -13,12 +14,17 @@ namespace DrawSpell
 
         public event Action<Shape.ShapeType, LineRenderer> ShapeRecognized;
         [SerializeField] private Material correctMaterial;
+        private bool CanSpell => DrawSpellRoot.instance.levels.state == Level.State.playing;
         private void Start()
         {
             FingersScript.Instance.Gestures[0].StateUpdated += Player_StateUpdated;
         }
 
-
+        public void Show(bool show)
+        {
+            line.gameObject.SetActive(show);
+            recognizer.enabled = show;
+        }
         private LineRenderer GetClone()
         {
             var newLine = Instantiate(line, line.transform.parent);
@@ -61,6 +67,7 @@ namespace DrawSpell
         {
             if (gesture.State == GestureRecognizerState.Ended)
             {
+                if (!CanSpell) return;
                 ImageGestureImage image = recognizer.CheckForImageMatch();
                 var lineClone = GetClone();
                 recognizer.ClearLineRenderers();

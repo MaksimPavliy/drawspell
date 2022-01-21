@@ -33,6 +33,7 @@ namespace DrawSpell
             ThemeSet.instance.ActivateSet(DrawSpellGeneralConfig.instance.customColorSets ? colorSetIndex : 0);
             player.LevelPassed += LevelPassed;
             EnemySpawner.EnemyKilled += EnemySpawner_EnemyKilled;
+            ShapeRecognizer.instance.Show(true);
         }
 
         private void EnemySpawner_EnemyKilled(Enemy obj)
@@ -77,12 +78,14 @@ namespace DrawSpell
 
         public void DoWin()
         {
+            ShapeRecognizer.instance.Show(false);
             GameRoot.instance.Get<WinnableLocationsController>().DoWin();
             IsPlaying = false;
         }
 
         public void DoLose()
         {
+            ShapeRecognizer.instance.Show(false);
             GameRoot.instance.Get<WinnableLocationsController>().DoLose();
             IsPlaying = false;
         }
