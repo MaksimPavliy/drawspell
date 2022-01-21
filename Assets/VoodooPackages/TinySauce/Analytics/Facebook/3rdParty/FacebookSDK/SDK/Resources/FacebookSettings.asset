@@ -16,9 +16,9 @@ MonoBehaviour:
   clientTokens:
   - 
   appIds:
-  - 0
+  - 340264611276097
   appLabels:
-  - Your App Name
+  - Draw Spell 3D
   cookie: 1
   logging: 1
   status: 1
