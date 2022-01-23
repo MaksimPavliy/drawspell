@@ -120,7 +120,7 @@ PrefabInstance:
     - target: {fileID: 971871354937953035, guid: 469984e3ea1294e539b639e1eb4c340c,
         type: 3}
       propertyPath: m_Name
-      value: HCMainMenuWindow
+      value: DrawSpellMainMenuWindow
       objectReference: {fileID: 0}
     - target: {fileID: 971871355900423489, guid: 469984e3ea1294e539b639e1eb4c340c,
         type: 3}
@@ -226,6 +226,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_HorizontalAlignment
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4853619757141687804, guid: 469984e3ea1294e539b639e1eb4c340c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4853619757807153150, guid: 469984e3ea1294e539b639e1eb4c340c,
         type: 3}
