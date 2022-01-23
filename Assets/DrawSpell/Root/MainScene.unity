@@ -864,17 +864,17 @@ PrefabInstance:
     - target: {fileID: 5837255206974891794, guid: ca3ac65e4f96f364789e57ec56f171e1,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0.000000007450581
       objectReference: {fileID: 0}
     - target: {fileID: 5837255206974891794, guid: ca3ac65e4f96f364789e57ec56f171e1,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000009313226
+      value: 0.000000022351742
       objectReference: {fileID: 0}
     - target: {fileID: 5837255206974891794, guid: ca3ac65e4f96f364789e57ec56f171e1,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0000000020954758
+      value: -0.0000000055879354
       objectReference: {fileID: 0}
     - target: {fileID: 6303544498737551121, guid: ca3ac65e4f96f364789e57ec56f171e1,
         type: 3}
@@ -884,22 +884,22 @@ PrefabInstance:
     - target: {fileID: 6946113206976933922, guid: ca3ac65e4f96f364789e57ec56f171e1,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9920437
+      value: 0.9861176
       objectReference: {fileID: 0}
     - target: {fileID: 6946113206976933922, guid: ca3ac65e4f96f364789e57ec56f171e1,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.123798825
+      value: 0.123059295
       objectReference: {fileID: 0}
     - target: {fileID: 6946113206976933922, guid: ca3ac65e4f96f364789e57ec56f171e1,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.02269751
+      value: -0.11062555
       objectReference: {fileID: 0}
     - target: {fileID: 6946113206976933922, guid: ca3ac65e4f96f364789e57ec56f171e1,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.002832461
+      value: 0.01380515
       objectReference: {fileID: 0}
     - target: {fileID: 7146533931447555973, guid: ca3ac65e4f96f364789e57ec56f171e1,
         type: 3}
@@ -1144,7 +1144,7 @@ PrefabInstance:
     - target: {fileID: 7668526609425894337, guid: 214fd3483a8358c4a92cfadeee7a8b1c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -79.3987
+      value: -79.39871
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 214fd3483a8358c4a92cfadeee7a8b1c, type: 3}
@@ -1987,7 +1987,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 205b00b67e6f0f040a51d0b763dd2bae, type: 2}
+  - {fileID: 2100000, guid: 897b2d3f5c1cccb40a7d98ad9e077080, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2011,25 +2011,61 @@ LineRenderer:
   m_Positions: []
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.1
+    widthMultiplier: 0.07
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
+        value: 0
+        inSlope: 3.670455
+        outSlope: 3.670455
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.21333437
+      - serializedVersion: 3
+        time: 0.14461601
+        value: 0.7347276
+        inSlope: 2.1720188
+        outSlope: 2.1720188
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.4934186
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
         weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.86854947
+        value: 0.7129958
+        inSlope: -2.2076495
+        outSlope: -2.2076495
+        tangentMode: 0
+        weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: -4.086018
+        outSlope: -4.086018
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.2012979
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.9828425, g: 0.7971698, b: 1, a: 1}
+      key0: {r: 1, g: 1, b: 1, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -2053,7 +2089,7 @@ LineRenderer:
       atime5: 0
       atime6: 0
       atime7: 0
-      m_Mode: 0
+      m_Mode: 1
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
@@ -4271,7 +4307,7 @@ PrefabInstance:
     - target: {fileID: 4506321101125412939, guid: 2539bf56e3473a34eaa880e0e381928c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -69.80104
+      value: -69.801056
       objectReference: {fileID: 0}
     - target: {fileID: 6234241278593352542, guid: 2539bf56e3473a34eaa880e0e381928c,
         type: 3}
@@ -4386,7 +4422,7 @@ PrefabInstance:
     - target: {fileID: 6909128977295015056, guid: 2539bf56e3473a34eaa880e0e381928c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -69.80104
+      value: -69.801056
       objectReference: {fileID: 0}
     - target: {fileID: 7294354557029862164, guid: 2539bf56e3473a34eaa880e0e381928c,
         type: 3}
